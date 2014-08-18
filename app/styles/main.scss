@@ -1,0 +1,35 @@
+ 
+body {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  margin: 0;
+  padding: 24px;
+  color: #333;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-touch-callout: none;
+}
+
+header, nav, section, article, footer {
+    display:block;
+    width:100%;
+    margion:0;
+    padding:0;
+}
+
+core-animated-pages {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font-size: 72px;
+  overflow: hidden;
+}
+
+section > div {
+  height: 100%;
+  color: white;
+}

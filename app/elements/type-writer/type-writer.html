@@ -1,0 +1,26 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="type-writer" attributes="">
+  <template>
+    <link rel="stylesheet" href="type-writer.css">
+
+    {{wordCount}}
+    <textarea id="typeWriterPad" name="type-writer-pad" value="{{wordValue}}"></textarea>
+
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer('type-writer', {
+        wordCount : 0,
+        wordValue : 'whats up?',
+        ready: function() {
+          console.log(this.$.typeWriterPad.value);
+        }
+      });
+
+    })();
+  </script>
+</polymer-element>
