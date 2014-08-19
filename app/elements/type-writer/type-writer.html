@@ -1,21 +1,26 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
+<link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
 <polymer-element name="type-writer" attributes="">
   <template>
     <link rel="stylesheet" href="type-writer.css">
 
     {{wordCount}}
-    <textarea id="typeWriterPad" name="type-writer-pad" value="{{wordValue}}"></textarea>
+    
+    <textarea id="typeWriterPad" name="type-writer-pad" value="{{value}}"></textarea>
 
+    <core-localstorage name="my-app-storage" value="{{value}}"></core-localstorage>
+
+    <core-localstorage id="settings" name="my-app-settings"></core-localstorage>
 
   </template>
   <script>
     (function () {
       'use strict';
+      // http://www.polymer-project.org/docs/elements/core-elements.html#core-localstorage
+      var settings = document.querySelector('#settings');
 
       Polymer('type-writer', {
         wordCount : 0,
-        wordValue : 'whats up?',
         ready: function() {
           console.log(this.$.typeWriterPad.value);
         }

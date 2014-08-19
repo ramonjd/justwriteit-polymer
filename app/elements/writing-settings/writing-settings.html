@@ -1,13 +1,16 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
 
 <polymer-element name="writing-settings" attributes="">
   <template>
     <link rel="stylesheet" href="writing-settings.css">
 
-    settings
+    <p>settings
     communicating between two elements:
 
-    http://www.polymer-project.org/articles/communication.html
+    http://www.polymer-project.org/articles/communication.html</p>
+
+    <core-localstorage name="my-app-settings" value="{{settings}}"></core-localstorage>
 
   </template>
   <script>
@@ -16,6 +19,7 @@
 
       Polymer({
         // define element prototype here
+        settings : 'test,test,test'
       });
 
     })();
