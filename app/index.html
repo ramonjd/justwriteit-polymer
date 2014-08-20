@@ -24,15 +24,34 @@
 <body fullbleed vertical layout unresolved>
 
 
+
+
   <header flex>
     
 
   </header>
 
 
-  <type-writer></type-writer>
 
-  <writing-settings></writing-settings>
+
+    <core-drawer-panel>
+    
+      <div drawer>
+        <button onclick="document.querySelector('core-drawer-panel').closeDrawer();">closeDrawer</button>
+        <writing-settings></writing-settings>
+
+      </div>
+        
+      <div main>
+        <button onclick="document.querySelector('core-drawer-panel').openDrawer();">openDrawer</button>
+         <type-writer></type-writer>
+      </div>
+      
+    </core-drawer-panel>
+
+ 
+
+  
 
   <footer flex>
     

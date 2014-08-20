@@ -1,14 +1,28 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
-
+<link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
+<link rel="import" href="../../bower_components/core-field/core-field.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <polymer-element name="writing-settings" attributes="">
   <template>
     <link rel="stylesheet" href="writing-settings.css">
 
-    <p>settings
-    communicating between two elements:
+    <core-field>
+      <core-icon icon="menu"></core-icon>
+      <label>I'm a label!</label>
+      <input placeholder="I have a label" flex>
+    </core-field>
 
-    http://www.polymer-project.org/articles/communication.html</p>
+      <paper-slider value="23" max="255" editable></paper-slider>
+
+
+        <core-dropdown halign="right">
+          <template repeat="{{countries}}">
+            <core-item label="{{name}}"></core-item>
+          </template>
+        </core-dropdown>
+
+    <p>settings communicating between two elements: http://www.polymer-project.org/articles/communication.html</p>
 
     <core-localstorage name="my-app-settings" value="{{settings}}"></core-localstorage>
 
@@ -19,8 +33,18 @@
 
       Polymer({
         // define element prototype here
-        settings : 'test,test,test'
+        settings : 'test,test,test',
+        countries: [ 
+        {name: 'Afghanistan', code: 'AF'}, 
+        {name: 'Åland Islands', code: 'AX'}, 
+        {name: 'Albania', code: 'AL'}, 
+        {name: 'Algeria', code: 'DZ'}, 
+        {name: 'American Samoa', code: 'AS'}, 
+        {name: 'Andorra', code: 'AD'}, 
+        {name: 'Angola', code: 'AO'}
+     ]
       });
+
 
     })();
   </script>
