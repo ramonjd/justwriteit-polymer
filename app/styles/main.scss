@@ -19,6 +19,24 @@ header, nav, section, article, footer {
     margion: 0;
     padding: 0;
 }
+    core-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index:1000;
+       background-color: #f4b400;
+       height:100px;
+    }
+    
+
+    
+    core-toolbar {
+      color: #f1f1f1;
+      fill: #f1f1f1;
+      background-color: transparent;
+    }
 core-animated-pages {
     position: absolute;
     top: 0;
