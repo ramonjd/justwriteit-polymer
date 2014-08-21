@@ -1,15 +1,16 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
+ <link href="../../bower_components/paper-button/paper-button.html" rel="import">
 <polymer-element name="type-writer" attributes="">
   <template>
     <link rel="stylesheet" href="type-writer.css">
 
     {{wordCount}}
-    
-    <textarea id="typeWriterPad" name="type-writer-pad" value="{{value}}"></textarea>
+    <paper-button raisedButton label="button"></paper-button>
+    <paper-button raisedButton class="colored" label="colored"></paper-button>
 
+    <textarea id="typeWriterTextarea" name="type-writer-textarea" value="{{value}}"></textarea>
     <core-localstorage name="my-app-storage" value="{{value}}"></core-localstorage>
-
     <core-localstorage id="settings" name="my-app-settings"></core-localstorage>
 
   </template>
@@ -19,13 +20,31 @@
       // http://www.polymer-project.org/docs/elements/core-elements.html#core-localstorage
       var settings = document.querySelector('#settings');
 
+
       Polymer('type-writer', {
-        wordCount : 0,
+
+        wordCount : this.getWordCount(),
+
+        getWordCount : function(){
+          return this.$.typeWriterTextarea.val() ? this.$.typeWriterTextarea.match(/\S+/g).length : 0;
+        },
+
+        getProgress : function(){
+
+        },
+
+        setClock : function(){
+
+        },
+
         ready: function() {
-          console.log(this.$.typeWriterPad.value);
+          
         }
       });
 
     })();
+
+
+
   </script>
 </polymer-element>
