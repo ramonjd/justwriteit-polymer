@@ -4,7 +4,7 @@ html, body {
 body {
     font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     margin: 0;
-    padding: 24px;
+    padding: 0;
     color: #333;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -16,57 +16,17 @@ body {
 header, nav, section, article, footer {
     display: block;
     width: 100%;
-    margion: 0;
+    margin: 0;
     padding: 0;
 }
-    core-scroll-header-panel {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index:1000;
-       background-color: #f4b400;
-       height:100px;
-    }
-    
 
-    
-    core-toolbar {
-      color: #f1f1f1;
-      fill: #f1f1f1;
-      background-color: transparent;
-    }
-core-animated-pages {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    font-size: 72px;
-    overflow: hidden;
+  
+core-scroll-header-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
-section > div {
-    height: 100%;
-    color: white;
-}
-[drawer] {
-    background-color: #B99588;
-    border-right: 1px solid #ccc;
-}
-[main] {
-    height: 100%;
-    background-color: #4F7DC9;
-}
-button {
-    width: 160px;
-    height: 40px;
-    font-size: 16px;
-    margin: 8px;
-}
-core-drawer-panel[narrow] button {
-    display: inline-block
-}
-
 
 

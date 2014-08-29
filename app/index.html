@@ -23,38 +23,39 @@
 
 <body fullbleed vertical layout unresolved>
 
-  <core-scroll-header-panel flex fixed="true">
-    <core-toolbar>
-  <header >
+
+
+
+
+
+
+
+  <core-scroll-header-panel condenses>
+
+    <core-toolbar class="tall">
     
-Header
-  </header>
+      <div flex></div>
+      <core-icon-button icon="more-vert" onclick="document.querySelector('#collapse1').toggle()"></core-icon-button>
+      <div class="bottom indent title">Title</div>
+
+
+
+      <core-collapse id="collapse1" class="box">
+        <div class="content">
+          <writing-settings></writing-settings>
+        </div>
+      </core-collapse>
+
+
     </core-toolbar>
-  </core-scroll-header-panel>
-
-
-
-
-
-
-
-    <core-drawer-panel>
     
-      <div drawer>
-        <button onclick="document.querySelector('core-drawer-panel').closeDrawer();">closeDrawer</button>
-        <writing-settings></writing-settings>
-
-      </div>
-        
-      <div main>
-        <button onclick="document.querySelector('core-drawer-panel').openDrawer();">openDrawer</button>
-         <type-writer></type-writer>
-      </div>
+    <div class="content">
       
-    </core-drawer-panel>
-
- 
-
+      <type-writer></type-writer>
+      
+    </div>
+    
+  </core-scroll-header-panel>
   
 
   <footer flex>

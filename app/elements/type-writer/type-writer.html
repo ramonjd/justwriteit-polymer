@@ -23,10 +23,13 @@
 
       Polymer('type-writer', {
 
-        wordCount : this.getWordCount(),
+       
+
+        wordCount : 0,
 
         getWordCount : function(){
-          return this.$.typeWriterTextarea.val() ? this.$.typeWriterTextarea.match(/\S+/g).length : 0;
+          this.wordCount = this.$.typeWriterTextarea.val() ? this.$.typeWriterTextarea.match(/\S+/g).length : 0
+          return this.wordCount;
         },
 
         getProgress : function(){
@@ -40,6 +43,7 @@
         ready: function() {
           
         }
+
       });
 
     })();
