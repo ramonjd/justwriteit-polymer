@@ -9,7 +9,7 @@
     <paper-button raisedButton label="button"></paper-button>
     <paper-button raisedButton class="colored" label="colored"></paper-button>
 
-    <textarea id="typeWriterTextarea" name="type-writer-textarea" value="{{value}}"></textarea>
+    <textarea id="typeWriterTextarea" name="type-writer-textarea" value="{{value}}" on-keyup="{{setWordCount}}"></textarea>
     <core-localstorage name="my-app-storage" value="{{value}}"></core-localstorage>
     <core-localstorage id="settings" name="my-app-settings"></core-localstorage>
 
@@ -27,9 +27,10 @@
 
         wordCount : 0,
 
-        getWordCount : function(){
+
+        setWordCount : function(){
           this.wordCount = this.$.typeWriterTextarea.val() ? this.$.typeWriterTextarea.match(/\S+/g).length : 0
-          return this.wordCount;
+          this.fire('word-count', {words: this.wordCount});
         },
 
         getProgress : function(){

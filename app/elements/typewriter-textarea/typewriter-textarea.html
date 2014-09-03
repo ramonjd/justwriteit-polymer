@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="typewriter-textarea" attributes="words">
+  <template>
+    <link rel="stylesheet" href="typewriter-textarea.css">
+    <textarea id="typewriterTextarea" name="typewriter-textarea" value="{{value}}"></textarea>
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      var wordCount = 0;
+
+      Polymer('typewriter-textarea', {
+
+        ready: function() {
+          this.addEventListener('keyup', this.setWordCount);
+        },
+
+        getWordCount : function(){
+          return wordCount;
+        },
+
+        setWordCount : function(){
+          wordCount = this.$.typewriterTextarea.val() ? this.$.typewriterTextarea.match(/\S+/g).length : 0
+          this.fire('word-count', {words: wordCount});
+        }
+
+      });
+
+    })();
+  </script>
+</polymer-element>
