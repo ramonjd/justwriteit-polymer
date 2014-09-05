@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+
+<polymer-element name="typewriter-progress" attributes="">
+  <template>
+    <link rel="stylesheet" href="typewriter-progress.css">
+    <paper-progress value="{{progressValue}}"></paper-progress>
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer('typewriter-progress', {
+        ready: function() {
+          
+        },
+        progressValue: 0,
+        progressMax: 100,
+        setProgressValue:function(val){
+          this.progressValue = val;
+        },
+        setProgressMax:function(val){
+          this.progressMax = val;
+        }
+
+      });
+
+    })();
+  </script>
+</polymer-element>

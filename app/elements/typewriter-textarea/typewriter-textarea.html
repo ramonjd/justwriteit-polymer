@@ -1,20 +1,25 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-input/core-input.html">
 
 <polymer-element name="typewriter-textarea" attributes="words">
   <template>
     <link rel="stylesheet" href="typewriter-textarea.css">
-    <textarea id="typewriterTextarea" name="typewriter-textarea" value="{{value}}"></textarea>
+    <core-input multiline id="typewriterTextarea2" value="{{value}}" placeholder="Start writing!" rows="200"></core-input>
   </template>
   <script>
     (function () {
       'use strict';
 
-      var wordCount = 0;
-
+      var wordCount = 0,
+      textareaElem;
+          textareaElem = document.getElementById('typewriterTextarea2');
+          console.log(textareaElem);
       Polymer('typewriter-textarea', {
 
         ready: function() {
-          this.addEventListener('keyup', this.setWordCount);
+          textareaElem = document.getElementById('typewriterTextarea2');
+          console.log(textareaElem);
+          textareaElem.addEventListener('input', this.setWordCount);
         },
 
         getWordCount : function(){
@@ -22,7 +27,7 @@
         },
 
         setWordCount : function(){
-          wordCount = this.$.typewriterTextarea.val() ? this.$.typewriterTextarea.match(/\S+/g).length : 0
+          wordCount = this.$.typewriterTextarea.value ? this.$.typewriterTextarea.value.match(/\S+/g).length : 0
           this.fire('word-count', {words: wordCount});
         }
 
