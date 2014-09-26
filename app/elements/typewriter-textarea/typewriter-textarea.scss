@@ -2,5 +2,18 @@
   display: block;
 }
 paper-input {
-	width:100%;
+    width:100%;
+    font-size:2rem;
+    line-height:1.4;  
 }
+paper-input::shadow  {
+/*
+    textarea {
+      
+    }
+    #label {
+        
+    }
+*/
+}
+

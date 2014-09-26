@@ -4,3 +4,16 @@
 paper-progress {
 	width:100%;
 }
+paper-progress::shadow #activeProgress {
+  background-color: green;
+  &.warning {
+      background-color: orange;
+  }
+  &.danger {
+      background-color: red;
+  }
+}
+
+paper-progress::shadow #secondaryProgress {
+  background-color: blue;
+}

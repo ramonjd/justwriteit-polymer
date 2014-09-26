@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Polymer WebApp</title>
+  <title>Just Write It!</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -27,25 +27,28 @@
 
   <core-scroll-header-panel condenses>
 
-    <core-toolbar class="tall">
+    <core-toolbar>
     
       <div flex></div>
       
-      <core-icon-button icon="more-vert" onclick="document.querySelector('#collapse1').toggle()"></core-icon-button>
-      <div class="bottom indent title">Title</div>
+      <div class="bottom title">
+        <h1>Just Write It!</h1>
+      </div>
 
 
+      <!--core-icon-button icon="more-vert" onclick="document.querySelector('#collapse1').toggle()"></core-icon-button>
 
       <core-collapse id="collapse1" class="box">
         <div class="content">
           <writing-settings></writing-settings>
         </div>
-      </core-collapse>
+      </core-collapse-->
 
 
     </core-toolbar>
     
     <div class="content">
+      <typewriter-timer></typewriter-timer>
       <typewriter-progress></typewriter-progress>
       <typewriter-textarea></typewriter-textarea>
       
@@ -58,7 +61,6 @@
     
 
   </footer>
-
 
   <script src="scripts/app.js"></script>
   <!-- endbuild-->

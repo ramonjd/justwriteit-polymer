@@ -4,23 +4,70 @@
 <polymer-element name="typewriter-progress" attributes="">
   <template>
     <link rel="stylesheet" href="typewriter-progress.css">
-    <paper-progress value="{{progressValue}}"></paper-progress>
+    <paper-progress id="progressBar" min="0" max="100" value="{{progressValue}}" secondaryProgess="0"></paper-progress>
   </template>
   <script>
     (function () {
       'use strict';
 
+
+
+    
+    // var progress = document.querySelector('paper-progress');
+    
+    // var repeat, maxRepeat = 5, animating = false;
+    
+    // function nextProgress() {
+    //   animating = true;
+    //   if (progress.value < progress.max) {
+    //     progress.value += (progress.step || 1);
+    //   } else {
+    //     if (++repeat >= maxRepeat) {
+    //       animating = false;
+    //       button.disabled = false;
+    //       return;
+    //     }
+    //     progress.value = progress.min;
+    //   }
+    //   progress.async(nextProgress);
+    // }
+    
+    // function startProgress() {
+    //   repeat = 0;
+    //   progress.value = progress.min;
+    //   button.disabled = true;
+    //   if (!animating) {
+    //     nextProgress();
+    //   }
+    // }
+    
+    // addEventListener('polymer-ready', function() {
+    //   startProgress();
+    // });
+    
+  
+
+
+
       Polymer('typewriter-progress', {
         ready: function() {
-          
+          console.log(this.$.progressBar.value);
         },
-        progressValue: 0,
-        progressMax: 100,
+
         setProgressValue:function(val){
-          this.progressValue = val;
+          this.$.progressBar.value = Math.floor(val/this.$.progressBar.max * 100);
         },
+
         setProgressMax:function(val){
-          this.progressMax = val;
+          this.$.progressBar.max = val;
+        },
+
+        setProgressMin:function(val){
+          this.$.progressBar.min = val;
+        },
+
+        setTimeProgress: function(val){
+          this.$.progressBar.secondaryProgess = val;
         }
 
       });

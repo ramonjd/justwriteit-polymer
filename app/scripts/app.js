@@ -5,7 +5,8 @@
 
 
             var updateWordCount = document.querySelector('typewriter-textarea'),
-            progressBar = document.querySelector('typewriter-progress');
+            progressBar = document.querySelector('typewriter-progress'),
+            timer = document.querySelector('typewriter-timer');
 
             updateWordCount.addEventListener('word-count', function(e) {
                     console.log(e.detail.words);
@@ -13,7 +14,10 @@
             });
 
             
-			progressBar.setProgressMax(10);
+			//progressBar.setProgressMax(100);
+            timer.setTime(100); 
+
+
 
   });
 

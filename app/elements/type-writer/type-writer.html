@@ -29,8 +29,7 @@
 
 
         setWordCount : function(){
-          this.wordCount = this.$.typeWriterTextarea.val() ? this.$.typeWriterTextarea.match(/\S+/g).length : 0
-          this.fire('word-count', {words: this.wordCount});
+     
         },
 
         getProgress : function(){
