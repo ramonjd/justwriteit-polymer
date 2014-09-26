@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>typewriter-progress</title>
+
+  <script src="../bower_components/platform/platform.js"></script>
+  <link rel="import"
+    href="../bower_components/polymer-test-tools/tools.html">
+  <script src="../bower_components/polymer-test-tools/htmltest.js">
+  </script>
+
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../elements/typewriter-progress/typewriter-progress.html">
+
+</head>
+<body>
+
+  <typewriter-progress></typewriter-progress>
+
+  <script>
+
+    document.addEventListener('polymer-ready', function() {
+
+      var el = document.querySelector('typewriter-progress');
+
+      // setProgressMin()
+      assert.equal(typeof el.setProgressMin, 'function');
+      el.setProgressMin(5);
+      assert.equal(el.$.progressBar.min, 5);
+
+
+      // setProgressMax()
+      assert.equal(typeof el.setProgressMax, 'function');
+      el.setProgressMax(100);
+      assert.equal(el.$.progressBar.max, 100);
+
+
+       // setProgressValue()
+      assert.equal(typeof el.setProgressValue, 'function');
+      el.setProgressValue(50);
+      assert.equal(el.$.progressBar.value, 50);     
+
+      // IMPORTANT:
+      // Make sure to call done() at the end of every test suite!
+      done();
+    });
+
+  </script>
+
+</body>
+</html>

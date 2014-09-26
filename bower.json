@@ -2,12 +2,11 @@
   "name": "justwriteit",
   "version": "0.0.0",
   "dependencies": {
-    "paper-elements": "Polymer/paper-elements#^0.4.0",
     "core-elements": "Polymer/core-elements#^0.4.0",
+    "paper-elements": "Polymer/paper-elements#^0.4.0",
     "polymer": "Polymer/polymer#^0.4.0"
   },
   "devDependencies": {
-    "mocha": "~1.21.4",
-    "chai": "~1.9.1"
+    "polymer-test-tools": "Polymer/polymer-test-tools#^0.4.0"
   }
 }

@@ -1,0 +1,87 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-input/core-input.html">
+<polymer-element name="count-down" attributes="duration">
+  <template>
+    <link rel="stylesheet" href="count-down.css">
+    <paper-input id="countDownElement" readonly="true"></paper-input>
+  </template>
+  <script>
+    (function () {
+      'use strict';
+      /*
+
+      1 min : 60
+      30 min : 1800
+      1 hour : 3600
+      
+      */
+      var end,
+      s = 1000,
+      m = s * 60,
+      h = m * 60,
+      d = h * 24,
+      _s,
+      _m,
+      _h,
+      _d,
+      timer,
+      now,
+      distance,
+      getCompleted = function(current, duration){
+        var seconds = current / 1000;
+        return 100 - Math.floor(seconds / duration * 100);
+      };
+
+
+      Polymer('count-down', {
+
+        // default duration = 30 mins (1800 secs)
+        duration : 1800,
+        ready: function() {
+          end = new Date();
+          // add selected seconds to current time
+          end.setSeconds(end.getSeconds() + this.duration);
+        },
+        start : function(){
+          timer = setInterval(this.render.bind(this), 1000);  
+          return this;
+        },
+        render : function(){
+            now = new Date();
+            distance = end.getTime()-now.getTime();
+
+            if (distance < 0) {
+                this.stop()
+                .done();
+                return false;
+            }
+            // TODO: push into array
+            _d = Math.floor(distance / d);
+            _h = Math.floor((distance % d) / h);
+            _m = Math.floor((distance % h) / m);
+            _s = Math.floor((distance % m) / s);
+
+            this.countDownValue = _h + ':' + _m + ':' + _s;
+
+            this.$.countDownElement.value = _h + ':' + _m + ':' + _s;
+
+            this.fire('tick', {value: this.countDownValue, percentage:getCompleted(distance, this.duration)});
+
+            return this;
+        },
+        pause : function(){
+
+        },
+        stop : function(){
+          clearInterval(timer);   
+          return this;
+        },
+        done : function(){
+          this.fire('complete');
+          return this;
+        }
+      });
+
+    })();
+  </script>
+</polymer-element>

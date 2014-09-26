@@ -130,13 +130,15 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
+          open: {
+            target: 'http://localhost:<%= connect.options.port %>/test'
+          },
           middleware: function (connect) {
             return [
-              mountFolder(connect, '.tmp'),
-              mountFolder(connect, 'test'),
               mountFolder(connect, yeomanConfig.app)
             ];
-          }
+          },
+          keepalive: true
         }
       },
       dist: {
@@ -168,14 +170,6 @@ module.exports = function (grunt) {
         '!<%= yeoman.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
       ]
-    },
-    mocha: {
-      all: {
-        options: {
-          run: true,
-          urls: ['http://localhost:<%= connect.options.port %>/index.html']
-        }
-      }
     },
     useminPrepare: {
       html: '<%= yeoman.app %>/index.html',
@@ -303,8 +297,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'connect:test',
-    'mocha'
+    'connect:test'
   ]);
 
   grunt.registerTask('build', [

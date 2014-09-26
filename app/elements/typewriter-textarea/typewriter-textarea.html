@@ -26,6 +26,7 @@
         setWordCount : function(){
           wordCount = (this.$.typewriterTextarea.inputValue.length > 0) ? this.$.typewriterTextarea.inputValue.match(/\S+/g).length : 0
           this.fire('word-count', {words: wordCount});
+          return this;
         }
 
       });

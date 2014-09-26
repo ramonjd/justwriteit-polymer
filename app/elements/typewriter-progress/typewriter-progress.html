@@ -1,10 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 
-<polymer-element name="typewriter-progress" attributes="">
+<polymer-element name="typewriter-progress">
   <template>
     <link rel="stylesheet" href="typewriter-progress.css">
-    <paper-progress id="progressBar" min="0" max="100" value="{{progressValue}}" secondaryProgess="0"></paper-progress>
+    <paper-progress id="progressBar" min="0" max="100" value="" secondaryProgress="0"></paper-progress>
   </template>
   <script>
     (function () {
@@ -51,23 +51,27 @@
 
       Polymer('typewriter-progress', {
         ready: function() {
-          console.log(this.$.progressBar.value);
+          //console.log(this.$.progressBar.value);
         },
 
         setProgressValue:function(val){
           this.$.progressBar.value = Math.floor(val/this.$.progressBar.max * 100);
+          return this;
         },
 
         setProgressMax:function(val){
           this.$.progressBar.max = val;
+          return this;
         },
 
         setProgressMin:function(val){
           this.$.progressBar.min = val;
+          return this;
         },
 
         setTimeProgress: function(val){
-          this.$.progressBar.secondaryProgess = val;
+          this.$.progressBar.secondaryProgress = val;
+          return this;
         }
 
       });
