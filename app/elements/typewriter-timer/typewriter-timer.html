@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
-<polymer-element name="typewriter-timer" attributes="time">
+<polymer-element name="typewriter-timer">
   <template>
     <link rel="stylesheet" href="typewriter-timer.css">
     <paper-input id="textareaTimer" readonly="true"></paper-input>
@@ -8,16 +7,37 @@
   <script>
     (function () {
       'use strict';
-      var milliSeconds = 0;  
+      var milliSeconds = 0,
+      timeLimit;
       Polymer('typewriter-timer', {
         ready: function() {
           //this.$.textareaTimer.focus();
         },
-        setTime : function(val){
+        start : function(){
+            // setInterval(function(){
+
+            // }, 1000);
+
             this.$.textareaTimer.inputValue = val;
+            return this;
+        },
+        pause : function(){
+            return this;
+        },
+        stop : function(){
+            return this;
+        },
+        increment : function(val){
+          
+        },
+        setTimeLimit : function(val){
+            timeLimit = val;
+            return this;
         },
         done : function(){
+          this.stop();
           this.fire('timer-complete');
+          return this;
         }
       });
 
