@@ -3,7 +3,7 @@
 <polymer-element name="count-down" attributes="duration">
   <template>
     <link rel="stylesheet" href="count-down.css">
-    <paper-input id="countDownElement" readonly="true"></paper-input>
+    <paper-input id="countDownElement" readonly="true" value="00:00:00"></paper-input>
   </template>
   <script>
     (function () {
@@ -20,64 +20,67 @@
       m = s * 60,
       h = m * 60,
       d = h * 24,
-      _s,
-      _m,
-      _h,
-      _d,
       timer,
+      countdownArray,
+      divider = ':',
       now,
       distance,
-      getCompleted = function(current, duration){
-        var seconds = current / 1000;
-        return 100 - Math.floor(seconds / duration * 100);
-      };
+      renderedDate;
 
 
       Polymer('count-down', {
 
         // default duration = 30 mins (1800 secs)
         duration : 1800,
+
         ready: function() {
           end = new Date();
           // add selected seconds to current time
           end.setSeconds(end.getSeconds() + this.duration);
+          return this;
         },
+
         start : function(){
           timer = setInterval(this.render.bind(this), 1000);  
           return this;
         },
+        
         render : function(){
             now = new Date();
             distance = end.getTime()-now.getTime();
 
             if (distance < 0) {
-                this.stop()
-                .done();
+                this.stop();
+                this.fire('complete');
                 return false;
             }
-            // TODO: push into array
-            _d = Math.floor(distance / d);
-            _h = Math.floor((distance % d) / h);
-            _m = Math.floor((distance % h) / m);
-            _s = Math.floor((distance % m) / s);
 
-            this.countDownValue = _h + ':' + _m + ':' + _s;
+            // key
+            // day =  Math.floor(distance / d);
+            // hour = Math.floor((distance % d) / h);
+            // min = Math.floor((distance % h) / m);
+            // sec = Math.floor((distance % m) / s);
 
-            this.$.countDownElement.value = _h + ':' + _m + ':' + _s;
+            countdownArray = [];
+            countdownArray.push(JFWI.pad(Math.floor((distance % d) / h)));
+            countdownArray.push(JFWI.pad(Math.floor((distance % h) / m)));
+            countdownArray.push(JFWI.pad(Math.floor((distance % m) / s)));
 
-            this.fire('tick', {value: this.countDownValue, percentage:getCompleted(distance, this.duration)});
+            renderedDate = countdownArray.join(divider);
+
+            this.$.countDownElement.value = renderedDate;
+
+            this.fire('tick', {value: renderedDate, percentage: JFWI.getCompletedTimePercentage(distance, this.duration)});
 
             return this;
         },
+        
         pause : function(){
 
         },
+        
         stop : function(){
           clearInterval(timer);   
-          return this;
-        },
-        done : function(){
-          this.fire('complete');
           return this;
         }
       });

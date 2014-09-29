@@ -16,14 +16,19 @@
 </head>
 <body>
 
-  <typewriter-timer></typewriter-timer>
+  <count-down></count-down>
 
   <script>
 
     document.addEventListener('polymer-ready', function() {
 
-        // IMPORTANT:
-        // Make sure to call done() at the end of every test suite!
+        var el = document.querySelector('count-down');
+
+        // set to sixty seconds
+        el.duration = 60;  
+
+        
+
         done();
       });
 

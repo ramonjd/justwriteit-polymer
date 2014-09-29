@@ -1,38 +1,79 @@
 (function(document) {
   'use strict';
 
+  // hoist, hoist me hearties!
+  var updateWordCountElem,
+  progressBarElem,
+  countDownElem,
+  dialogElem;
+
+
+  // bootstrap application
   document.addEventListener('polymer-ready', function() {
 
+        dialogElem = document.querySelector('paper-dialog');
+        updateWordCountElem = document.querySelector('typewriter-textarea');
+        progressBarElem = document.querySelector('typewriter-progress');
+        countDownElem = document.querySelector('count-down');
+        
+        // can't set element attribute because for some reason DOM elem is not avail
+        dialogElem.opened = true;
 
-            var updateWordCount = document.querySelector('typewriter-textarea'),
-            progressBar = document.querySelector('typewriter-progress'),
-            countDown = document.querySelector('count-down');
+        dialogElem.addEventListener('core-overlay-open', function(e) {
           
-            updateWordCount.addEventListener('word-count', function(e) {
-                    console.log(e.detail.words);
-                    progressBar.setProgressValue(e.detail.words);
-            });
+          if (e.detail === false) {
+            countDownElem.start();
+          }
+
+        });
 
 
-            countDown.addEventListener('complete', function(e) {
-                    console.log('YOU MADE IT!');
-            });
+
+      
+        updateWordCountElem.addEventListener('word-count', function(e) {
+                console.log(e.detail.words);
+                progressBarElem.setProgressValue(e.detail.words);
+        });
 
 
-            countDown.addEventListener('tick', function(e) {
-                    console.log(e.detail.percentage);
-                    progressBar.setTimeProgress(e.detail.percentage);
-            });
-
-            countDown.start();
+        countDownElem.addEventListener('complete', function(e) {
+                console.log('YOU MADE IT!');
+        });
 
 
-			//progressBar.setProgressMax(100);
-           // timer.setTime(100); 
+        countDownElem.addEventListener('tick', function(e) {
+                console.log(e.detail.percentage);
+                progressBarElem.setTimeProgress(e.detail.percentage);
+        });
+
+        
 
 
+			//progressBarElem.setProgressMax(100);
 
   });
+
+
+
+  // global namespace for testable utilities
+  window.JFWI = (function(){
+
+      var pad = function (n) {
+        n = parseInt(n, null);
+        return (n < 10 && n >= 0) ? ('0' + n) : n;
+      },
+      getCompletedTimePercentage = function(current, duration){
+        var seconds = current / 1000;
+        return 100 - Math.floor(seconds / duration * 100);
+      };
+
+      return {
+        pad:pad,
+        getCompletedTimePercentage:getCompletedTimePercentage
+      }
+
+  }());
+
 
 
 

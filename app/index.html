@@ -15,7 +15,6 @@
 
   <script src="bower_components/platform/platform.js"></script>
 
-
   <link rel="import" href="elements/elements.html">
 
   <!-- endbuild-->
@@ -60,6 +59,13 @@
     
 
   </footer>
+
+
+  <paper-dialog heading="Adjust settings or just start writing" transition="paper-dialog-transition-center" backdrop="true" layered="true" autoCloseDisabled="true">
+    <writing-settings></writing-settings>
+    <paper-button label="START WRITING" dismissive raisedButton="true" icon="create"></paper-button>
+  </paper-dialog>
+
 
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
