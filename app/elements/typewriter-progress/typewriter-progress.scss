@@ -17,3 +17,12 @@ paper-progress::shadow #activeProgress {
 paper-progress::shadow #secondaryProgress {
   background-color: cotton-blue;
 }
+
+.ui-display {
+  padding:20px;
+  font-size:1.5rem;
+  display:inline-block;
+  background:#eee;
+  border-radius:10px;
+  margin:10px 0;
+}

@@ -1,9 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/core-input/core-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <polymer-element name="count-down" attributes="duration">
   <template>
     <link rel="stylesheet" href="count-down.css">
-    <paper-input id="countDownElement" readonly="true" value="00:00:00"></paper-input>
+    <div class="ui-display clock-count">{{clock}}</div>
   </template>
   <script>
     (function () {
@@ -30,17 +30,25 @@
 
       Polymer('count-down', {
 
+        complete : false,
+
         // default duration = 30 mins (1800 secs)
         duration : 1800,
 
         ready: function() {
-          end = new Date();
-          // add selected seconds to current time
-          end.setSeconds(end.getSeconds() + this.duration);
+          this.clock = '00:00:00';
           return this;
         },
 
-        start : function(){
+        start : function(duration){
+          if (duration) {
+            this.duration = duration;
+          }
+
+          end = new Date();
+          // add selected seconds to current time
+          end.setSeconds(end.getSeconds() + this.duration);
+
           timer = setInterval(this.render.bind(this), 1000);  
           return this;
         },
@@ -68,7 +76,7 @@
 
             renderedDate = countdownArray.join(divider);
 
-            this.$.countDownElement.value = renderedDate;
+            this.clock = renderedDate;
 
             this.fire('tick', {value: renderedDate, percentage: JFWI.getCompletedTimePercentage(distance, this.duration)});
 
@@ -78,7 +86,6 @@
         pause : function(){
 
         },
-        
         stop : function(){
           clearInterval(timer);   
           return this;

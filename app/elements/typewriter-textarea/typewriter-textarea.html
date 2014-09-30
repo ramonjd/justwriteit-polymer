@@ -16,7 +16,6 @@
         textAreaValue : '',
 
         ready: function() {
-          //this.$.typewriterTextarea.focus();
         },
 
         getWordCount : function(){
@@ -27,7 +26,13 @@
           wordCount = (this.$.typewriterTextarea.inputValue.length > 0) ? this.$.typewriterTextarea.inputValue.match(/\S+/g).length : 0
           this.fire('word-count', {words: wordCount});
           return this;
+        },
+
+        focus : function(){
+          this.$.typewriterTextarea.focus();
+          return this;
         }
+
 
       });
 

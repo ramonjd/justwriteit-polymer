@@ -1,9 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <polymer-element name="typewriter-progress">
   <template>
     <link rel="stylesheet" href="typewriter-progress.css">
+    <div class="ui-display word-count">{{words}}</div>
     <paper-progress id="progressBar" min="0" max="100" value="" secondaryProgress="0"></paper-progress>
   </template>
   <script>
@@ -45,17 +47,25 @@
     //   startProgress();
     // });
     
-  
-
 
 
       Polymer('typewriter-progress', {
-        ready: function() {
-          //console.log(this.$.progressBar.value);
-        },
 
+        complete : false,
+
+        ready: function() {
+            this.words = 0;
+        },
+        checkStatus : function(val){
+          if (this.$.progressBar.value >= 100 && this.complete === false) {
+            this.complete = true;
+            this.fire('complete');
+          }
+        },
         setProgressValue:function(val){
+          this.setWordProgress(val);
           this.$.progressBar.value = Math.floor(val/this.$.progressBar.max * 100);
+          this.checkStatus();
           return this;
         },
 
@@ -71,6 +81,11 @@
 
         setTimeProgress: function(val){
           this.$.progressBar.secondaryProgress = val;
+          return this;
+        },
+
+        setWordProgress: function(val){
+          this.words = val + '/' + this.$.progressBar.max;
           return this;
         }
 

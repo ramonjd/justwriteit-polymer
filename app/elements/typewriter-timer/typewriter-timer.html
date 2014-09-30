@@ -17,11 +17,8 @@
         ready: function() {
 
           countDown = document.querySelector('count-down');
-
           this.$.countDown.addEventListener('complete', this.done);
-
           this.$.countDown.addEventListener('update', this.render);
-
           this.$.countDown.start();
 
         },
@@ -47,7 +44,6 @@
             return this;
         },
         done : function(){
-
           return this;
         }
       });

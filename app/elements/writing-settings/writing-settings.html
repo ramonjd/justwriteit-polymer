@@ -1,48 +1,71 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
-<link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
-<link rel="import" href="../../bower_components/core-field/core-field.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
-<polymer-element name="writing-settings" attributes="">
+<polymer-element name="writing-settings" attributes="time words">
   <template>
     <link rel="stylesheet" href="writing-settings.css">
 
-    <core-field>
-      <core-icon icon="menu"></core-icon>
-      <label>I'm a label!</label>
-      <input placeholder="I have a label" flex>
-    </core-field>
+ <section>
+  
+    <h3>
+      <span>Minutes: </span><span>{{settings.time}}</span>
+    </h3>
+  
+      <paper-slider id="timeGoal" pin min="1" max="60" value="{{settings.time}}"></paper-slider>
+  </section>
 
-
-
-        <core-dropdown halign="right">
-          <template repeat="{{countries}}">
-            <core-item label="{{name}}"></core-item>
-          </template>
-        </core-dropdown>
-
-
-    <p>settings communicating between two elements: http://www.polymer-project.org/articles/communication.html</p>
-
-    <core-localstorage name="my-app-settings" value="{{settings}}"></core-localstorage>
+ <section>
+  
+    <h3>
+      <span>Words: </span><span>{{settings.words}}</span>
+    </h3>
+  
+      <paper-slider id="wordsGoal" pin min="50" max="2500" value="{{settings.words}}"></paper-slider>
+  </section>
+      
+    <core-localstorage name="jfwi-settings" value="{{settings}}"></core-localstorage>
 
   </template>
   <script>
     (function () {
       'use strict';
-      // http://www.polymer-project.org/docs/elements/material.html
-      Polymer({
-        // define element prototype here
-        settings : 'test,test,test',
-        countries: [ 
-        {name: 'Afghanistan', code: 'AF'}, 
-        {name: 'Åland Islands', code: 'AX'}, 
-        {name: 'Albania', code: 'AL'}, 
-        {name: 'Algeria', code: 'DZ'}, 
-        {name: 'American Samoa', code: 'AS'}, 
-        {name: 'Andorra', code: 'AD'}, 
-        {name: 'Angola', code: 'AO'}
-     ]
+
+
+      Polymer('writing-settings',{
+
+        // defaults
+        defaults : {
+          words: 500,
+          time : 30
+        },
+
+      
+        ready: function() {
+
+
+            if (!this.settings) {
+              this.settings = this.defaults;
+            }
+ console.log(this.settings);
+
+
+            this.$.wordsGoal.addEventListener('core-change', function(e) {
+              this.save();
+            }.bind(this));
+    
+            this.$.timeGoal.addEventListener('core-change', function(e) {
+              this.save();
+            }.bind(this));
+        },
+
+        save : function(key, value){
+
+          this.settings = {
+            words : this.$.wordsGoal.value,
+            time : this.$.timeGoal.value > 0 ? this.$.timeGoal.value : this.defaults.time
+          };
+        }
+
       });
 
 

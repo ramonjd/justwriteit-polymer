@@ -5,7 +5,8 @@
   var updateWordCountElem,
   progressBarElem,
   countDownElem,
-  dialogElem;
+  dialogElem,
+  settingsElem;
 
 
   // bootstrap application
@@ -15,6 +16,7 @@
         updateWordCountElem = document.querySelector('typewriter-textarea');
         progressBarElem = document.querySelector('typewriter-progress');
         countDownElem = document.querySelector('count-down');
+        settingsElem = document.querySelector('writing-settings');
         
         // can't set element attribute because for some reason DOM elem is not avail
         dialogElem.opened = true;
@@ -22,13 +24,13 @@
         dialogElem.addEventListener('core-overlay-open', function(e) {
           
           if (e.detail === false) {
-            countDownElem.start();
+            progressBarElem.setProgressMax(settingsElem.settings.words);
+            countDownElem.start(settingsElem.settings.time * 60);
+            updateWordCountElem.focus();
+
           }
 
         });
-
-
-
       
         updateWordCountElem.addEventListener('word-count', function(e) {
                 console.log(e.detail.words);
