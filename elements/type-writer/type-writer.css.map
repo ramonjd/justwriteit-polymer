@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "file": "",
+  "sources": ["app/elements/type-writer/type-writer.scss"],
+  "names": [],
+  "mappings": "AAAA;EACE,SAAS;;AAGX;EACM,QAAQ;EACR,OAAO;;AAGb,YAAY;EACN,OAAO;EACP,MAAM;;AAGZ,YAAY,cAAc;EACpB,YAAY;EACZ,OAAO;;AAGb,YAAY,cAAc,SAAS,SAAS,YAAY,cAAc,QAAQ,SAAS;EAEjF,OAAO;;AAGb,YAAY,cAAc,SAAS,UAAU,YAAY,cAAc,QAAQ,SAAS;EAElF,YAAY"
+}

@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
+ <link href="../../bower_components/paper-button/paper-button.html" rel="import">
+<polymer-element name="type-writer" attributes="">
+  <template>
+    <link rel="stylesheet" href="type-writer.css">
+
+    {{wordCount}}
+    <paper-button raisedButton label="button"></paper-button>
+    <paper-button raisedButton class="colored" label="colored"></paper-button>
+
+    <textarea id="typeWriterTextarea" name="type-writer-textarea" value="{{value}}" on-keyup="{{setWordCount}}"></textarea>
+    <core-localstorage name="my-app-storage" value="{{value}}"></core-localstorage>
+    <core-localstorage id="settings" name="my-app-settings"></core-localstorage>
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+      // http://www.polymer-project.org/docs/elements/core-elements.html#core-localstorage
+      var settings = document.querySelector('#settings');
+
+
+      Polymer('type-writer', {
+
+       
+
+        wordCount : 0,
+
+
+        setWordCount : function(){
+     
+        },
+
+        getProgress : function(){
+
+        },
+
+        setClock : function(){
+
+        },
+
+        ready: function() {
+          
+        }
+
+      });
+
+    })();
+
+
+
+  </script>
+</polymer-element>

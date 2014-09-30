@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "file": "",
+  "sources": ["app/elements/typewriter-textarea/typewriter-textarea.scss"],
+  "names": [],
+  "mappings": "AAAA;EACE,SAAS;;AAEX;EACI,OAAM;EACN,WAAU;EACV,aAAY"
+}

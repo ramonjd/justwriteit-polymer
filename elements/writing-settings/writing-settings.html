@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-localstorage/core-localstorage.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<polymer-element name="writing-settings" attributes="time words">
+  <template>
+    <link rel="stylesheet" href="writing-settings.css">
+
+ <section>
+  
+    <h3>
+      <span>Minutes: </span><span>{{settings.time}}</span>
+    </h3>
+  
+      <paper-slider id="timeGoal" pin min="1" max="60" value="{{settings.time}}"></paper-slider>
+  </section>
+
+ <section>
+  
+    <h3>
+      <span>Words: </span><span>{{settings.words}}</span>
+    </h3>
+  
+      <paper-slider id="wordsGoal" pin min="50" max="2500" value="{{settings.words}}"></paper-slider>
+  </section>
+      
+    <core-localstorage name="jfwi-settings" value="{{settings}}"></core-localstorage>
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+
+      Polymer('writing-settings',{
+
+        // defaults
+        defaults : {
+          words: 500,
+          time : 30
+        },
+
+      
+        ready: function() {
+
+
+            if (!this.settings) {
+              this.settings = this.defaults;
+            }
+ console.log(this.settings);
+
+
+            this.$.wordsGoal.addEventListener('core-change', function(e) {
+              this.save();
+            }.bind(this));
+    
+            this.$.timeGoal.addEventListener('core-change', function(e) {
+              this.save();
+            }.bind(this));
+        },
+
+        save : function(key, value){
+
+          this.settings = {
+            words : this.$.wordsGoal.value,
+            time : this.$.timeGoal.value > 0 ? this.$.timeGoal.value : this.defaults.time
+          };
+        }
+
+      });
+
+
+    })();
+  </script>
+</polymer-element>

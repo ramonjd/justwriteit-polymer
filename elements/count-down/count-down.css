@@ -1,0 +1,11 @@
+:host {
+  display: block; }
+
+.ui-display {
+  padding: 20px;
+  font-size: 1.5rem;
+  display: inline-block;
+  background: #eee;
+  border-radius: 10px;
+  margin: 10px 0;
+  float: right; }

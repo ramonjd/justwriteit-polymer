@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "file": "",
+  "sources": ["app/elements/typewriter-progress/typewriter-progress.scss"],
+  "names": [],
+  "mappings": "AAAA;EACE,SAAS;;AAEX;EACC,OAAM;;AAEP,cAAc,SAAS;EACrB,kBAAkB;EAApB,cAAc,SAAS,eAAe;IAEhC,kBAAkB;EACxB,cAAc,SAAS,eAAe;IAEhC,kBAAkB;;AAIxB,cAAc,SAAS;EACrB,kBAAkB;;AAGpB;EACE,SAAQ;EACR,WAAU;EACV,SAAQ;EACR,YAAW;EACX,eAAc;EACd,QAAO"
+}

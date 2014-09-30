@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../count-down/count-down.html">
+
+<polymer-element name="typewriter-timer">
+  <template>
+    <link rel="stylesheet" href="typewriter-timer.css">
+    <count-down id="countDown" duration="600"></count-down>
+  </template>
+  <script>
+    (function () {
+      'use strict';
+      var countDown;
+      Polymer('typewriter-timer', {
+
+        countDownValue : '',
+
+        ready: function() {
+
+          countDown = document.querySelector('count-down');
+          this.$.countDown.addEventListener('complete', this.done);
+          this.$.countDown.addEventListener('update', this.render);
+          this.$.countDown.start();
+
+        },
+        start : function(){
+            setInterval(function(){
+
+            }, 1000);
+
+            this.$.textareaTimer.inputValue = val;
+            return this;
+        },
+        pause : function(){
+            return this;
+        },
+        stop : function(){
+            return this;
+        },
+        render : function(e){
+          this.countDownValue = e.detail.value;
+        },
+        setTimeLimit : function(val){
+            timeLimit = val;
+            return this;
+        },
+        done : function(){
+          return this;
+        }
+      });
+
+    })();
+  </script>
+</polymer-element>

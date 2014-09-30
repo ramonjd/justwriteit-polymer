@@ -1,0 +1,4 @@
+:host {
+  display: block; }
+  :host paper-slider {
+    width: 100%; }

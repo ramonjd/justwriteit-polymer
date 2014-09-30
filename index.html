@@ -1,1 +1,79 @@
-My GitHub Page
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Just Write It!</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild-->
+
+  <script src="bower_components/platform/platform.js"></script>
+
+  <link rel="import" href="elements/elements.html">
+
+  <!-- endbuild-->
+</head>
+
+<body fullbleed vertical layout unresolved>
+
+
+  <core-scroll-header-panel condenses>
+
+    <core-toolbar>
+    
+      <div flex></div>
+      
+      <div class="bottom title">
+        <h1>Just Write It!</h1>
+      </div>
+
+
+      <!--core-icon-button icon="more-vert" onclick="document.querySelector('#collapse1').toggle()"></core-icon-button>
+
+      <core-collapse id="collapse1" class="box">
+        <div class="content">
+          <writing-settings></writing-settings>
+        </div>
+      </core-collapse-->
+
+
+    </core-toolbar>
+    
+    <div class="content">
+      <count-down duration="100"></count-down>
+      <typewriter-progress></typewriter-progress>
+      <typewriter-textarea></typewriter-textarea>
+    </div>
+    
+  </core-scroll-header-panel>
+  
+
+  <footer flex>
+    
+
+  </footer>
+
+
+  <paper-dialog class="settings-dialogue" heading="Adjust settings" transition="paper-dialog-transition-center" backdrop="true" layered="true" autoCloseDisabled="true">
+    <style shim-shadowdom>
+      paper-fab {
+        background: #5677fc;
+      }
+    </style>
+    <writing-settings></writing-settings>
+    <div style="float:right;padding:10px 0 0 0">
+      <paper-fab icon="create" class="blue" dismissive></paper-fab>
+    </div>
+  </paper-dialog>
+
+
+  <script src="scripts/app.js"></script>
+  <!-- endbuild-->
+</body>
+
+</html>
