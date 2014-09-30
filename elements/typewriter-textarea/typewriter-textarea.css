@@ -1,7 +1,19 @@
 :host {
-  display: block; }
+  display: block;
+  margin: 20px 0; }
 
 paper-input {
   width: 100%;
   font-size: 2rem;
-  line-height: 1.4; }
+  line-height: 1.4;
+  background: white; }
+
+paper-input::shadow textarea {
+  padding: 0 20px 20px 20px;
+  margin: 0 auto;
+  width: 95%;
+  display: block; }
+paper-input::shadow div.label {
+  display: none; }
+paper-input::shadow div.underline {
+  display: none; }
