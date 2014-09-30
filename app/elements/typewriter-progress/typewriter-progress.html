@@ -5,7 +5,7 @@
 <polymer-element name="typewriter-progress">
   <template>
     <link rel="stylesheet" href="typewriter-progress.css">
-    <div class="ui-display word-count">{{words}}</div>
+    <h5 class="ui-display word-count">{{words}} Words</h5>
     <paper-progress id="progressBar" min="0" max="100" value="" secondaryProgress="0"></paper-progress>
   </template>
   <script>
@@ -53,6 +53,8 @@
 
         complete : false,
 
+        maxValue : 100,
+
         ready: function() {
             this.words = 0;
         },
@@ -64,18 +66,14 @@
         },
         setProgressValue:function(val){
           this.setWordProgress(val);
-          this.$.progressBar.value = Math.floor(val/this.$.progressBar.max * 100);
+          this.$.progressBar.value = Math.floor(val/this.maxValue * 100);
+          console.log(this.$.progressBar.value);
           this.checkStatus();
           return this;
         },
 
-        setProgressMax:function(val){
-          this.$.progressBar.max = val;
-          return this;
-        },
-
-        setProgressMin:function(val){
-          this.$.progressBar.min = val;
+        setMaxValue:function(val){
+          this.maxValue = val;
           return this;
         },
 
@@ -85,7 +83,7 @@
         },
 
         setWordProgress: function(val){
-          this.words = val + '/' + this.$.progressBar.max;
+          this.words = val + '/' + this.maxValue;
           return this;
         }
 

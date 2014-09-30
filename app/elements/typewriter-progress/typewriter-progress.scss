@@ -1,5 +1,9 @@
 :host {
   display: block;
+  position:absolute;
+  top: 0;
+  left: 0;
+  width:100%;
 }
 paper-progress {
 	width:100%;
@@ -21,8 +25,6 @@ paper-progress::shadow #secondaryProgress {
 .ui-display {
   padding:20px;
   font-size:1.5rem;
-  display:inline-block;
-  background:#eee;
-  border-radius:10px;
-  margin:10px 0;
+  color:white;
+  text-align:left;
 }

@@ -24,7 +24,7 @@
         dialogElem.addEventListener('core-overlay-open', function(e) {
           
           if (e.detail === false) {
-            progressBarElem.setProgressMax(settingsElem.settings.words);
+            progressBarElem.setMaxValue(settingsElem.settings.words);
             countDownElem.start(settingsElem.settings.time * 60);
             updateWordCountElem.focus();
 
@@ -33,18 +33,18 @@
         });
       
         updateWordCountElem.addEventListener('word-count', function(e) {
-                console.log(e.detail.words);
+               // console.log(e.detail.words);
                 progressBarElem.setProgressValue(e.detail.words);
         });
 
 
         countDownElem.addEventListener('complete', function(e) {
-                console.log('YOU MADE IT!');
+                //console.log('YOU MADE IT!');
         });
 
 
         countDownElem.addEventListener('tick', function(e) {
-                console.log(e.detail.percentage);
+                //console.log(e.detail.percentage);
                 progressBarElem.setTimeProgress(e.detail.percentage);
         });
 

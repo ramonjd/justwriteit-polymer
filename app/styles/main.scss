@@ -20,18 +20,20 @@ header, nav, section, article, footer {
     padding: 0;
 }
   
-core-scroll-header-panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+core-header-panel {
+  height: 100%;
+  .core-header {
+    text-align:center;
+    height:120px;
+  }
+  .content {
+      padding:0;
+  }
 }
 
 .content {
-  margin:0 8px;
+  margin:0 20px;
+  padding: 0 20px;
 }
-
-
 
 
