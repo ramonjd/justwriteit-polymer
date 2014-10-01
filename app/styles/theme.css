@@ -518,6 +518,7 @@ html /deep/ paper-dialog /deep/ section {
 
 html /deep/ .core-header {
   height:120px;
+  padding:0;
 }
 
 html /deep/ .core-header h1 {
