@@ -62,7 +62,10 @@
           if (this.$.progressBar.value >= 100 && this.complete === false) {
             this.complete = true;
             this.fire('complete');
+          } else {
+            this.complete === false;
           }
+
         },
         setProgressValue:function(val){
           this.setWordProgress(val);

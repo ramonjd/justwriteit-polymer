@@ -6,13 +6,16 @@
   progressBarElem,
   countDownElem,
   dialogElem,
-  settingsElem;
+  settingsElem,
+  toastElem,
+  wordCount;
 
 
   // bootstrap application
   document.addEventListener('polymer-ready', function() {
 
         dialogElem = document.querySelector('paper-dialog');
+        toastElem = document.querySelector('paper-toast');
         updateWordCountElem = document.querySelector('typewriter-textarea');
         progressBarElem = document.querySelector('typewriter-progress');
         countDownElem = document.querySelector('count-down');
@@ -33,13 +36,18 @@
         });
       
         updateWordCountElem.addEventListener('word-count', function(e) {
-               // console.log(e.detail.words);
-                progressBarElem.setProgressValue(e.detail.words);
+            wordCount = e.detail.words;
+            progressBarElem.setProgressValue(e.detail.words);
         });
 
 
         countDownElem.addEventListener('complete', function(e) {
-                //console.log('YOU MADE IT!');
+              if (wordCount >= settingsElem.settings.words) {
+                toastElem.text ="You beat the clock! Well done.";
+              } else {
+                toastElem.text ="The clock beat you :(";
+              }
+              toastElem.show();
         });
 
 
@@ -48,6 +56,15 @@
                 progressBarElem.setTimeProgress(e.detail.percentage);
         });
 
+        progressBarElem.addEventListener('complete', function(e) {
+            if (countDownElem.complete === false && wordCount >= settingsElem.settings.words) {
+                  toastElem.text ="You wrote all your words! Well done.";
+              } else {
+                toastElem.text ="You got there... eventually :)";
+              }
+                
+                toastElem.show();
+        });
         
 
 

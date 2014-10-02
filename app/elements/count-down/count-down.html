@@ -87,6 +87,7 @@
 
         },
         stop : function(){
+          this.complete = true;
           clearInterval(timer);   
           return this;
         }
