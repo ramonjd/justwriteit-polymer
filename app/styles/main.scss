@@ -39,3 +39,21 @@ core-header-panel {
 paper-toast {
   background-color:#9ACD32;
 }
+
+// Defining values
+$screen-sm-min: 768px;
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-md-min: 992px;
+$screen-sm-max: ($screen-md-min - 1);
+$screen-lg-min: 1200px;
+$screen-md-max: ($screen-lg-min - 1);
+
+
+@media (max-width: $screen-sm-max) { 
+  
+  h1 {
+    font-size: 26px !important;
+    margin: 20px 0 !important;
+  }
+
+}

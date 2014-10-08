@@ -59,19 +59,20 @@
             this.words = 0;
         },
         checkStatus : function(val){
-          if (this.$.progressBar.value >= 100 && this.complete === false) {
-            this.complete = true;
-            this.fire('complete');
+          if (val >= this.maxValue) {
+              if (this.complete === false) {
+                this.complete = true;
+                this.fire('complete'); 
+              }
           } else {
-            this.complete === false;
+            this.complete = false;
           }
-
+          return this;
         },
         setProgressValue:function(val){
           this.setWordProgress(val);
           this.$.progressBar.value = Math.floor(val/this.maxValue * 100);
-          console.log(this.$.progressBar.value);
-          this.checkStatus();
+          this.checkStatus(val);
           return this;
         },
 

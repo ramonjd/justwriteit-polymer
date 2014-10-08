@@ -1,52 +1,58 @@
 <!doctype html>
 <html>
+
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>typewriter-progress</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>typewriter-progress</title>
 
-  <script src="../bower_components/platform/platform.js"></script>
-  <link rel="import"
-    href="../bower_components/polymer-test-tools/tools.html">
-  <script src="../bower_components/polymer-test-tools/htmltest.js">
-  </script>
+    <script src="../bower_components/platform/platform.js"></script>
+    <link rel="import" href="../bower_components/polymer-test-tools/tools.html">
+    <script src="../bower_components/polymer-test-tools/htmltest.js">
+    </script>
 
-  <!-- Step 1: import the element to test -->
-  <link rel="import" href="../elements/typewriter-progress/typewriter-progress.html">
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../elements/typewriter-progress/typewriter-progress.html">
 
 </head>
+
 <body>
 
-  <typewriter-progress></typewriter-progress>
+    <typewriter-progress></typewriter-progress>
 
-  <script>
-
+    <script>
     document.addEventListener('polymer-ready', function() {
 
-      var el = document.querySelector('typewriter-progress');
-
-      // setProgressMin()
-      assert.equal(typeof el.setProgressMin, 'function');
-      el.setProgressMin(5);
-      assert.equal(el.$.progressBar.min, 5);
+        var el = document.querySelector('typewriter-progress');
 
 
-      // setProgressMax()
-      assert.equal(typeof el.setProgressMax, 'function');
-      el.setProgressMax(100);
-      assert.equal(el.$.progressBar.max, 100);
+        // setMaxValue()
+        assert.equal(typeof el.setMaxValue, 'function');
+        el.setMaxValue(100);
+        assert.equal(el.$.progressBar.max, 100);
 
 
-       // setProgressValue()
-      assert.equal(typeof el.setProgressValue, 'function');
-      el.setProgressValue(50);
-      assert.equal(el.$.progressBar.value, 50);     
+        // setProgressValue()
+        assert.equal(typeof el.setProgressValue, 'function');
+        el.setProgressValue(50);
+        assert.equal(el.$.progressBar.value, 50);
 
-      // IMPORTANT:
-      // Make sure to call done() at the end of every test suite!
-      done();
+
+        // setWordProgress()
+        assert.equal(typeof el.setWordProgress, 'function');
+        el.setWordProgress(50);
+        assert.equal(el.words, '50/100');
+
+        // setTimeProgress()
+        assert.equal(typeof el.setTimeProgress, 'function');
+        el.setTimeProgress(50);
+        assert.equal(el.$.progressBar.secondaryProgress, 50);
+
+        // IMPORTANT:
+        // Make sure to call done() at the end of every test suite!
+        done();
     });
-
-  </script>
+    </script>
 
 </body>
+
 </html>

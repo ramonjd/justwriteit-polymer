@@ -1,13 +1,17 @@
 :host {
-  display: block;
-	position:absolute;
-	top: 0;
-	right: 0;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index:1;
 }
-
 .ui-display {
-  padding:20px;
-  font-size:1.5rem;
-  display:inline-block;
-  color:white;
+    padding: 20px;
+    font-size: 1.5rem;
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+    &:hover {
+        color: #bdced7;
+    }
 }

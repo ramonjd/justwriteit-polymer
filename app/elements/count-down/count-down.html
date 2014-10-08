@@ -1,98 +1,134 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <polymer-element name="count-down" attributes="duration">
-  <template>
-    <link rel="stylesheet" href="count-down.css">
-    <h5 class="ui-display clock-count">{{clock}}</h5>
-  </template>
-  <script>
-    (function () {
-      'use strict';
-      /*
+    <template>
+        <link rel="stylesheet" href="count-down.css">
+        <core-tooltip label="Click to toggle pause/start" position="left">
+          <h5 class="ui-display clock-count" on-click={{toggle}}>{{clock}}</h5>
+        </core-tooltip>
+    </template>
+    <script>
+    (function() {
+        'use strict';
+        /*
 
-      1 min : 60
-      30 min : 1800
-      1 hour : 3600
+        1 min : 60
+        30 min : 1800
+        1 hour : 3600
       
-      */
-      var end,
-      s = 1000,
-      m = s * 60,
-      h = m * 60,
-      d = h * 24,
-      timer,
-      countdownArray,
-      divider = ':',
-      now,
-      distance,
-      renderedDate;
+        */
+        var end,
+            s = 1000,
+            m = s * 60,
+            h = m * 60,
+            d = h * 24,
+            timer,
+            countdownArray,
+            divider = ':',
+            now,
+            distance,
+            renderedDate;
 
 
-      Polymer('count-down', {
+        Polymer('count-down', {
 
-        complete : false,
+            complete: false,
 
-        // default duration = 30 mins (1800 secs)
-        duration : 1800,
+            // default duration = 30 mins (1800 secs)
+            duration: 1800,
 
-        ready: function() {
-          this.clock = '00:00:00';
-          return this;
-        },
+            countdown : null,
 
-        start : function(duration){
-          if (duration) {
-            this.duration = duration;
-          }
+            ready: function() {
+                this.clock = '00:00:00';
+                return this;
+            },
 
-          end = new Date();
-          // add selected seconds to current time
-          end.setSeconds(end.getSeconds() + this.duration);
+            set: function(duration){
+                if (duration) {
+                    this.duration = duration;
+                }
 
-          timer = setInterval(this.render.bind(this), 1000);  
-          return this;
-        },
-        
-        render : function(){
-            now = new Date();
-            distance = end.getTime()-now.getTime();
+                // set out seconds countdown to track seconds
+                // let's add one second to account for the first setInterval delay
+                this.countdown = this.duration + 1;
 
-            if (distance < 0) {
-                this.stop();
-                this.fire('complete');
-                return false;
+                return this;
+            },
+
+            start: function() {
+
+                end = new Date();
+
+                // add selected seconds to current time
+                end.setSeconds(end.getSeconds() + this.countdown);
+
+                timer = setInterval(this.render.bind(this), 1000);
+
+                this.paused = false;
+                
+                return this;
+            },
+
+            render: function() {
+                now = new Date();
+                distance = end.getTime() - now.getTime();
+
+                if (distance < 0) {
+                    this.stop();
+                    this.fire('complete');
+                    return false;
+                }
+
+                // key
+                // day =  Math.floor(distance / d);
+                // hour = Math.floor((distance % d) / h);
+                // min = Math.floor((distance % h) / m);
+                // sec = Math.floor((distance % m) / s);
+
+                countdownArray = [];
+                countdownArray.push(JFWI.pad(Math.floor((distance % d) / h)));
+                countdownArray.push(JFWI.pad(Math.floor((distance % h) / m)));
+                countdownArray.push(JFWI.pad(Math.floor((distance % m) / s)));
+
+                renderedDate = countdownArray.join(divider);
+
+                this.clock = renderedDate;
+
+                this.countdown--;
+
+                this.fire('tick', {
+                    value: renderedDate,
+                    percentage: JFWI.getCompletedTimePercentage(distance, this.duration)
+                });
+
+                return this;
+            },
+
+            pause: function() {
+                clearInterval(timer);
+                this.paused = true;
+                return this;
+            },
+
+            toggle: function() {
+
+                if (this.paused === true) {
+                    this.start();
+                } else {
+                    this.pause();
+                }
+
+            },
+
+            stop: function() {
+                this.complete = true;
+                clearInterval(timer);
+                return this;
             }
-
-            // key
-            // day =  Math.floor(distance / d);
-            // hour = Math.floor((distance % d) / h);
-            // min = Math.floor((distance % h) / m);
-            // sec = Math.floor((distance % m) / s);
-
-            countdownArray = [];
-            countdownArray.push(JFWI.pad(Math.floor((distance % d) / h)));
-            countdownArray.push(JFWI.pad(Math.floor((distance % h) / m)));
-            countdownArray.push(JFWI.pad(Math.floor((distance % m) / s)));
-
-            renderedDate = countdownArray.join(divider);
-
-            this.clock = renderedDate;
-
-            this.fire('tick', {value: renderedDate, percentage: JFWI.getCompletedTimePercentage(distance, this.duration)});
-
-            return this;
-        },
-        
-        pause : function(){
-
-        },
-        stop : function(){
-          this.complete = true;
-          clearInterval(timer);   
-          return this;
-        }
-      });
+        });
 
     })();
-  </script>
+    </script>
 </polymer-element>

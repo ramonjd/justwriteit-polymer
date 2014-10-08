@@ -28,7 +28,7 @@
           
           if (e.detail === false) {
             progressBarElem.setMaxValue(settingsElem.settings.words);
-            countDownElem.start(settingsElem.settings.time * 60);
+            countDownElem.set(settingsElem.settings.time * 60).start();
             updateWordCountElem.focus();
 
           }
@@ -40,36 +40,28 @@
             progressBarElem.setProgressValue(e.detail.words);
         });
 
-
-        countDownElem.addEventListener('complete', function(e) {
+        countDownElem.addEventListener('complete', function() {
               if (wordCount >= settingsElem.settings.words) {
-                toastElem.text ="You beat the clock! Well done.";
+                toastElem.text = 'You beat the clock! Well done.';
               } else {
-                toastElem.text ="The clock beat you :(";
+                toastElem.text = 'The clock beat you :(';
               }
               toastElem.show();
         });
 
-
         countDownElem.addEventListener('tick', function(e) {
-                //console.log(e.detail.percentage);
-                progressBarElem.setTimeProgress(e.detail.percentage);
+            progressBarElem.setTimeProgress(e.detail.percentage);
         });
 
-        progressBarElem.addEventListener('complete', function(e) {
+        progressBarElem.addEventListener('complete', function() {
             if (countDownElem.complete === false && wordCount >= settingsElem.settings.words) {
-                  toastElem.text ="You wrote all your words! Well done.";
+                  toastElem.text = 'You wrote all your words! Well done.';
               } else {
-                toastElem.text ="You got there... eventually :)";
+                toastElem.text = 'You got there... eventually :)';
               }
-                
-                toastElem.show();
+              toastElem.show();
         });
         
-
-
-			//progressBarElem.setProgressMax(100);
-
   });
 
 
@@ -89,7 +81,7 @@
       return {
         pad:pad,
         getCompletedTimePercentage:getCompletedTimePercentage
-      }
+      };
 
   }());
 
