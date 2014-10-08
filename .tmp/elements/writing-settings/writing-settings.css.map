@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "file": "",
+  "sources": ["app/elements/writing-settings/writing-settings.scss"],
+  "names": [],
+  "mappings": "AAAA;EACE,SAAS;EAAX,MAAM;IAEF,OAAM"
+}

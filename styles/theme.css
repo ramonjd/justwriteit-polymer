@@ -1,5 +1,5 @@
-@import url("//fonts.googleapis.com/css?family=Open+Sans");
-@import url("//fonts.googleapis.com/css?family=Oswald:700");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans");
+@import url("http://fonts.googleapis.com/css?family=Oswald:700");
 /*
  * PolymerThemes v0.2.0
  * Homepage: http://polymerthemes.com
@@ -523,5 +523,8 @@ html /deep/ .core-header {
 
 html /deep/ .core-header h1 {
   height:120px;
-   margin: 0;
+  margin: 0;
 }
+
+
+

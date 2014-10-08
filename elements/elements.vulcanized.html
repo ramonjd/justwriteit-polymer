@@ -242,41 +242,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!--
 @group Paper Elements
 
-`paper-button` is a button containing text or an image. When the user touches
-the button, a ripple effect emanates from the point of contact.
+Material Design: <a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a>
 
-A `paper-button` may be flat or raised. A raised button behaves like a piece
-of paper resting on another sheet, and lifts up upon press. Flat buttons do
-not raise up. Add the `raisedButton` attribute to make a raised button.
+`paper-button` is a button. When the user touches the button, a ripple effect emanates
+from the point of contact. It may be flat or raised. A raised button is styled with a
+shadow.
 
 Example:
 
-    <paper-button label="flat button"></paper-button>
-    <paper-button label="raised button" raisedButton></paper-button>
+    <paper-button>flat button</paper-button>
+    <paper-button raised>raised button</paper-button>
 
-A button should be styled with a background color, text color, ripple color
-and hover color.
+You may use custom DOM in the button body to create a variety of buttons. For example, to
+create a button with an icon and some text:
 
-To style the background, text and hover color, apply the `background` and
-`color` CSS properties to the button. To style the ripple color, apply the
-`color` CSS property to the `#ripple` element in the button's shadow root:
+    <paper-button>
+      <core-icon icon="favorite">
+      custom button content
+    </paper-button>
 
-    /* Style #my-button blue with white text and darker blue ink. */
+Styling
+-------
+
+Style the button with CSS as you would a normal DOM element.
+
+    /* make #my-button green with yellow text */
     #my-button {
-        background: #4285f4;
-        color: #fff;
+        background: green;
+        color: yellow;
     }
 
-    #my-button:hover {
-        background: #2a56c6;
-    }
+By default, the ripple is the same color as the foreground at 25% opacity. You may
+customize the color using this selector:
 
+    /* make #my-button use a blue ripple instead of foreground color */
     #my-button::shadow #ripple {
-        color: #2a56c6;
+      color: blue;
     }
+
+The opacity of the ripple is not customizable via CSS.
 
 @element paper-button
-@extends paper-focusable
+@extends paper-button-base
+@status unstable
 -->
 
 
@@ -486,39 +494,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <!--
-/**
- * @group Paper Elements
- *
- * paper-focusable is a base class for paper elements that can be focused.
- *
- * @element paper-focusable
- * @status beta
- * @homepage github.io
- */
--->
-
-
-
-<polymer-element name="paper-focusable" attributes="active focused disabled isToggle" tabindex="0" on-down="{{downAction}}" on-up="{{upAction}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-contextmenu="{{contextMenuAction}}" assetpath="../bower_components/paper-focusable/">
-
-  <template>
-    <style>:host([disabled]){pointer-events:none}</style>
-    <content></content>
-  </template>
-
-  <script>Polymer("paper-focusable",{publish:{active:{value:false,reflect:true},focused:{value:false,reflect:true},pressed:{value:false,reflect:true},disabled:{value:false,reflect:true},isToggle:{value:false,reflect:false}},disabledChanged:function(){if(this.disabled){this.removeAttribute("tabindex")}else{this.setAttribute("tabindex",0)}},downAction:function(){this.pressed=true;this.focused=false;if(this.isToggle){this.active=!this.active}else{this.active=true}},contextMenuAction:function(e){this.upAction(e);this.focusAction()},upAction:function(){this.pressed=false;if(!this.isToggle){this.active=false}},focusAction:function(){if(!this.pressed){this.focused=true}},blurAction:function(){this.focused=false}});</script>
-</polymer-element>
-
-<!--
-Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<!--
 `paper-ripple` provides a visual effect that other paper elements can
 use to simulate a rippling effect emanating from the point of contact.  The
 effect can be visualized as a concentric circle with motion.
@@ -528,7 +503,7 @@ Example:
     <paper-ripple></paper-ripple>
 
 `paper-ripple` listens to "down" and "up" events so it would display ripple
-effect when touches on it.  You can also defeat the default behavior and 
+effect when touches on it.  You can also defeat the default behavior and
 manually route the down and up actions to the ripple element.  Note that it is
 important if you call downAction() you will have to make sure to call upAction()
 so that `paper-ripple` would end the animation loop.
@@ -573,14 +548,14 @@ Apply `circle` class to make the rippling effect within a circle.
 <polymer-element name="paper-ripple" attributes="initialOpacity opacityDecayVelocity" assetpath="../bower_components/paper-ripple/">
 <template>
 
-  <style>:host{display:block;position:relative}:host-context([noink]){pointer-events:none}#bg,#waves,.wave-container,.wave{pointer-events:none;position:absolute;top:0;left:0;width:100%;height:100%}#bg,.wave{opacity:0}#waves,.wave{overflow:hidden}.wave-container,.wave{border-radius:50%}:host(.circle) #bg,:host(.circle) #waves{border-radius:50%}:host(.circle) .wave-container{overflow:hidden}</style>
+  <style>:host{display:block;position:relative;border-radius:inherit;overflow:hidden}:host-context([noink]){pointer-events:none}#bg,#waves,.wave-container,.wave{pointer-events:none;position:absolute;top:0;left:0;width:100%;height:100%}#bg,.wave{opacity:0}#waves,.wave{overflow:hidden}.wave-container,.wave{border-radius:50%}:host(.circle) #bg,:host(.circle) #waves{border-radius:50%}:host(.circle) .wave-container{overflow:hidden}</style>
 
   <div id="bg"></div>
   <div id="waves">
   </div>
 
 </template>
-<script>(function(){var waveMaxRadius=150;function waveRadiusFn(touchDownMs,touchUpMs,anim){var touchDown=touchDownMs/1e3;var touchUp=touchUpMs/1e3;var totalElapsed=touchDown+touchUp;var ww=anim.width,hh=anim.height;var waveRadius=Math.min(Math.sqrt(ww*ww+hh*hh),waveMaxRadius)*1.1+5;var duration=1.1-.2*(waveRadius/waveMaxRadius);var tt=totalElapsed/duration;var size=waveRadius*(1-Math.pow(80,-tt));return Math.abs(size)}function waveOpacityFn(td,tu,anim){var touchDown=td/1e3;var touchUp=tu/1e3;var totalElapsed=touchDown+touchUp;if(tu<=0){return anim.initialOpacity}return Math.max(0,anim.initialOpacity-touchUp*anim.opacityDecayVelocity)}function waveOuterOpacityFn(td,tu,anim){var touchDown=td/1e3;var touchUp=tu/1e3;var outerOpacity=touchDown*.3;var waveOpacity=waveOpacityFn(td,tu,anim);return Math.max(0,Math.min(outerOpacity,waveOpacity))}function waveDidFinish(wave,radius,anim){var waveOpacity=waveOpacityFn(wave.tDown,wave.tUp,anim);return waveOpacity<.01&&radius>=Math.min(wave.maxRadius,waveMaxRadius)}function waveAtMaximum(wave,radius,anim){var waveOpacity=waveOpacityFn(wave.tDown,wave.tUp,anim);return waveOpacity>=anim.initialOpacity&&radius>=Math.min(wave.maxRadius,waveMaxRadius)}function drawRipple(ctx,x,y,radius,innerAlpha,outerAlpha){if(outerAlpha!==undefined){ctx.bg.style.opacity=outerAlpha}ctx.wave.style.opacity=innerAlpha;var s=radius/(ctx.containerSize/2);var dx=x-ctx.containerWidth/2;var dy=y-ctx.containerHeight/2;ctx.wc.style.webkitTransform="translate3d("+dx+"px,"+dy+"px,0)";ctx.wc.style.transform="translate3d("+dx+"px,"+dy+"px,0)";ctx.wave.style.webkitTransform="scale("+s+","+s+")";ctx.wave.style.transform="scale3d("+s+","+s+",1)"}function createWave(elem){var elementStyle=window.getComputedStyle(elem);var fgColor=elementStyle.color;var inner=document.createElement("div");inner.style.backgroundColor=fgColor;inner.classList.add("wave");var outer=document.createElement("div");outer.classList.add("wave-container");outer.appendChild(inner);var container=elem.$.waves;container.appendChild(outer);elem.$.bg.style.backgroundColor=fgColor;var wave={bg:elem.$.bg,wc:outer,wave:inner,waveColor:fgColor,maxRadius:0,isMouseDown:false,mouseDownStart:0,mouseUpStart:0,tDown:0,tUp:0};return wave}function removeWaveFromScope(scope,wave){if(scope.waves){var pos=scope.waves.indexOf(wave);scope.waves.splice(pos,1);wave.wc.remove()}}var pow=Math.pow;var now=Date.now;if(window.performance&&performance.now){now=performance.now.bind(performance)}function cssColorWithAlpha(cssColor,alpha){var parts=cssColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);if(typeof alpha=="undefined"){alpha=1}if(!parts){return"rgba(255, 255, 255, "+alpha+")"}return"rgba("+parts[1]+", "+parts[2]+", "+parts[3]+", "+alpha+")"}function dist(p1,p2){return Math.sqrt(pow(p1.x-p2.x,2)+pow(p1.y-p2.y,2))}function distanceFromPointToFurthestCorner(point,size){var tl_d=dist(point,{x:0,y:0});var tr_d=dist(point,{x:size.w,y:0});var bl_d=dist(point,{x:0,y:size.h});var br_d=dist(point,{x:size.w,y:size.h});return Math.max(tl_d,tr_d,bl_d,br_d)}Polymer("paper-ripple",{initialOpacity:.25,opacityDecayVelocity:.8,backgroundFill:true,pixelDensity:2,eventDelegates:{down:"downAction",up:"upAction"},ready:function(){this.waves=[]},downAction:function(e){var wave=createWave(this);this.cancelled=false;wave.isMouseDown=true;wave.tDown=0;wave.tUp=0;wave.mouseUpStart=0;wave.mouseDownStart=now();var rect=this.getBoundingClientRect();var width=rect.width;var height=rect.height;var touchX=e.x-rect.left;var touchY=e.y-rect.top;wave.startPosition={x:touchX,y:touchY};if(this.classList.contains("recenteringTouch")){wave.endPosition={x:width/2,y:height/2};wave.slideDistance=dist(wave.startPosition,wave.endPosition)}wave.containerSize=Math.max(width,height);wave.containerWidth=width;wave.containerHeight=height;wave.maxRadius=distanceFromPointToFurthestCorner(wave.startPosition,{w:width,h:height});wave.wc.style.top=(wave.containerHeight-wave.containerSize)/2+"px";wave.wc.style.left=(wave.containerWidth-wave.containerSize)/2+"px";wave.wc.style.width=wave.containerSize+"px";wave.wc.style.height=wave.containerSize+"px";this.waves.push(wave);if(!this._loop){this._loop=this.animate.bind(this,{width:width,height:height});requestAnimationFrame(this._loop)}},upAction:function(){for(var i=0;i<this.waves.length;i++){var wave=this.waves[i];if(wave.isMouseDown){wave.isMouseDown=false;wave.mouseUpStart=now();wave.mouseDownStart=0;wave.tUp=0;break}}this._loop&&requestAnimationFrame(this._loop)},cancel:function(){this.cancelled=true},animate:function(ctx){var shouldRenderNextFrame=false;var deleteTheseWaves=[];var longestTouchDownDuration=0;var longestTouchUpDuration=0;var lastWaveColor=null;var anim={initialOpacity:this.initialOpacity,opacityDecayVelocity:this.opacityDecayVelocity,height:ctx.height,width:ctx.width};for(var i=0;i<this.waves.length;i++){var wave=this.waves[i];if(wave.mouseDownStart>0){wave.tDown=now()-wave.mouseDownStart}if(wave.mouseUpStart>0){wave.tUp=now()-wave.mouseUpStart}var tUp=wave.tUp;var tDown=wave.tDown;longestTouchDownDuration=Math.max(longestTouchDownDuration,tDown);longestTouchUpDuration=Math.max(longestTouchUpDuration,tUp);var radius=waveRadiusFn(tDown,tUp,anim);var waveAlpha=waveOpacityFn(tDown,tUp,anim);var waveColor=cssColorWithAlpha(wave.waveColor,waveAlpha);lastWaveColor=wave.waveColor;var x=wave.startPosition.x;var y=wave.startPosition.y;if(wave.endPosition){var translateFraction=Math.min(1,radius/wave.containerSize*2/Math.sqrt(2));x+=translateFraction*(wave.endPosition.x-wave.startPosition.x);y+=translateFraction*(wave.endPosition.y-wave.startPosition.y)}var bgFillColor=null;if(this.backgroundFill){var bgFillAlpha=waveOuterOpacityFn(tDown,tUp,anim);bgFillColor=cssColorWithAlpha(wave.waveColor,bgFillAlpha)}drawRipple(wave,x,y,radius,waveAlpha,bgFillAlpha);var maximumWave=waveAtMaximum(wave,radius,anim);var waveDissipated=waveDidFinish(wave,radius,anim);var shouldKeepWave=!waveDissipated||maximumWave;var shouldRenderWaveAgain=!waveDissipated&&!maximumWave;shouldRenderNextFrame=shouldRenderNextFrame||shouldRenderWaveAgain;if(!shouldKeepWave||this.cancelled){deleteTheseWaves.push(wave)}}if(shouldRenderNextFrame){requestAnimationFrame(this._loop)}for(var i=0;i<deleteTheseWaves.length;++i){var wave=deleteTheseWaves[i];removeWaveFromScope(this,wave)}if(!this.waves.length&&this._loop){this.$.bg.style.backgroundColor=null;this._loop=null;this.fire("core-transitionend")}}})})();</script>
+<script>(function(){var waveMaxRadius=150;function waveRadiusFn(touchDownMs,touchUpMs,anim){var touchDown=touchDownMs/1e3;var touchUp=touchUpMs/1e3;var totalElapsed=touchDown+touchUp;var ww=anim.width,hh=anim.height;var waveRadius=Math.min(Math.sqrt(ww*ww+hh*hh),waveMaxRadius)*1.1+5;var duration=1.1-.2*(waveRadius/waveMaxRadius);var tt=totalElapsed/duration;var size=waveRadius*(1-Math.pow(80,-tt));return Math.abs(size)}function waveOpacityFn(td,tu,anim){var touchDown=td/1e3;var touchUp=tu/1e3;var totalElapsed=touchDown+touchUp;if(tu<=0){return anim.initialOpacity}return Math.max(0,anim.initialOpacity-touchUp*anim.opacityDecayVelocity)}function waveOuterOpacityFn(td,tu,anim){var touchDown=td/1e3;var touchUp=tu/1e3;var outerOpacity=touchDown*.3;var waveOpacity=waveOpacityFn(td,tu,anim);return Math.max(0,Math.min(outerOpacity,waveOpacity))}function waveDidFinish(wave,radius,anim){var waveOpacity=waveOpacityFn(wave.tDown,wave.tUp,anim);return waveOpacity<.01&&radius>=Math.min(wave.maxRadius,waveMaxRadius)}function waveAtMaximum(wave,radius,anim){var waveOpacity=waveOpacityFn(wave.tDown,wave.tUp,anim);return waveOpacity>=anim.initialOpacity&&radius>=Math.min(wave.maxRadius,waveMaxRadius)}function drawRipple(ctx,x,y,radius,innerAlpha,outerAlpha){if(outerAlpha!==undefined){ctx.bg.style.opacity=outerAlpha}ctx.wave.style.opacity=innerAlpha;var s=radius/(ctx.containerSize/2);var dx=x-ctx.containerWidth/2;var dy=y-ctx.containerHeight/2;ctx.wc.style.webkitTransform="translate3d("+dx+"px,"+dy+"px,0)";ctx.wc.style.transform="translate3d("+dx+"px,"+dy+"px,0)";ctx.wave.style.webkitTransform="scale("+s+","+s+")";ctx.wave.style.transform="scale3d("+s+","+s+",1)"}function createWave(elem){var elementStyle=window.getComputedStyle(elem);var fgColor=elementStyle.color;var inner=document.createElement("div");inner.style.backgroundColor=fgColor;inner.classList.add("wave");var outer=document.createElement("div");outer.classList.add("wave-container");outer.appendChild(inner);var container=elem.$.waves;container.appendChild(outer);elem.$.bg.style.backgroundColor=fgColor;var wave={bg:elem.$.bg,wc:outer,wave:inner,waveColor:fgColor,maxRadius:0,isMouseDown:false,mouseDownStart:0,mouseUpStart:0,tDown:0,tUp:0};return wave}function removeWaveFromScope(scope,wave){if(scope.waves){var pos=scope.waves.indexOf(wave);scope.waves.splice(pos,1);wave.wc.remove()}}var pow=Math.pow;var now=Date.now;if(window.performance&&performance.now){now=performance.now.bind(performance)}function cssColorWithAlpha(cssColor,alpha){var parts=cssColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);if(typeof alpha=="undefined"){alpha=1}if(!parts){return"rgba(255, 255, 255, "+alpha+")"}return"rgba("+parts[1]+", "+parts[2]+", "+parts[3]+", "+alpha+")"}function dist(p1,p2){return Math.sqrt(pow(p1.x-p2.x,2)+pow(p1.y-p2.y,2))}function distanceFromPointToFurthestCorner(point,size){var tl_d=dist(point,{x:0,y:0});var tr_d=dist(point,{x:size.w,y:0});var bl_d=dist(point,{x:0,y:size.h});var br_d=dist(point,{x:size.w,y:size.h});return Math.max(tl_d,tr_d,bl_d,br_d)}Polymer("paper-ripple",{initialOpacity:.25,opacityDecayVelocity:.8,backgroundFill:true,pixelDensity:2,eventDelegates:{down:"downAction",up:"upAction"},ready:function(){this.waves=[]},downAction:function(e){var wave=createWave(this);this.cancelled=false;wave.isMouseDown=true;wave.tDown=0;wave.tUp=0;wave.mouseUpStart=0;wave.mouseDownStart=now();var rect=this.getBoundingClientRect();var width=rect.width;var height=rect.height;var touchX=e.x-rect.left;var touchY=e.y-rect.top;wave.startPosition={x:touchX,y:touchY};if(this.classList.contains("recenteringTouch")){wave.endPosition={x:width/2,y:height/2};wave.slideDistance=dist(wave.startPosition,wave.endPosition)}wave.containerSize=Math.max(width,height);wave.containerWidth=width;wave.containerHeight=height;wave.maxRadius=distanceFromPointToFurthestCorner(wave.startPosition,{w:width,h:height});wave.wc.style.top=(wave.containerHeight-wave.containerSize)/2+"px";wave.wc.style.left=(wave.containerWidth-wave.containerSize)/2+"px";wave.wc.style.width=wave.containerSize+"px";wave.wc.style.height=wave.containerSize+"px";this.waves.push(wave);if(!this._loop){this._loop=this.animate.bind(this,{width:width,height:height});requestAnimationFrame(this._loop)}},upAction:function(){for(var i=0;i<this.waves.length;i++){var wave=this.waves[i];if(wave.isMouseDown){wave.isMouseDown=false;wave.mouseUpStart=now();wave.mouseDownStart=0;wave.tUp=0;break}}this._loop&&requestAnimationFrame(this._loop)},cancel:function(){this.cancelled=true},animate:function(ctx){var shouldRenderNextFrame=false;var deleteTheseWaves=[];var longestTouchDownDuration=0;var longestTouchUpDuration=0;var lastWaveColor=null;var anim={initialOpacity:this.initialOpacity,opacityDecayVelocity:this.opacityDecayVelocity,height:ctx.height,width:ctx.width};for(var i=0;i<this.waves.length;i++){var wave=this.waves[i];if(wave.mouseDownStart>0){wave.tDown=now()-wave.mouseDownStart}if(wave.mouseUpStart>0){wave.tUp=now()-wave.mouseUpStart}var tUp=wave.tUp;var tDown=wave.tDown;longestTouchDownDuration=Math.max(longestTouchDownDuration,tDown);longestTouchUpDuration=Math.max(longestTouchUpDuration,tUp);var radius=waveRadiusFn(tDown,tUp,anim);var waveAlpha=waveOpacityFn(tDown,tUp,anim);var waveColor=cssColorWithAlpha(wave.waveColor,waveAlpha);lastWaveColor=wave.waveColor;var x=wave.startPosition.x;var y=wave.startPosition.y;if(wave.endPosition){var translateFraction=Math.min(1,radius/wave.containerSize*2/Math.sqrt(2));x+=translateFraction*(wave.endPosition.x-wave.startPosition.x);y+=translateFraction*(wave.endPosition.y-wave.startPosition.y)}var bgFillColor=null;if(this.backgroundFill){var bgFillAlpha=waveOuterOpacityFn(tDown,tUp,anim);bgFillColor=cssColorWithAlpha(wave.waveColor,bgFillAlpha)}drawRipple(wave,x,y,radius,waveAlpha,bgFillAlpha);var maximumWave=waveAtMaximum(wave,radius,anim);var waveDissipated=waveDidFinish(wave,radius,anim);var shouldKeepWave=!waveDissipated||maximumWave;var shouldRenderWaveAgain=wave.mouseUpStart?!waveDissipated:!maximumWave;shouldRenderNextFrame=shouldRenderNextFrame||shouldRenderWaveAgain;if(!shouldKeepWave||this.cancelled){deleteTheseWaves.push(wave)}}if(shouldRenderNextFrame){requestAnimationFrame(this._loop)}for(var i=0;i<deleteTheseWaves.length;++i){var wave=deleteTheseWaves[i];removeWaveFromScope(this,wave)}if(!this.waves.length&&this._loop){this.$.bg.style.backgroundColor=null;this._loop=null;this.fire("core-transitionend")}}})})();</script>
 </polymer-element>
 
 <!--
@@ -650,34 +625,85 @@ root if there is one. This implies:
 </polymer-element>
 
 
-<polymer-element name="paper-button" extends="paper-focusable" attributes="label raisedButton iconSrc icon" role="button" assetpath="../bower_components/paper-button/">
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!--
+@group Paper Elements
+
+`paper-button-base` is the base class for button-like elements with ripple and optional shadow.
+
+@element paper-button-base
+@extends paper-focusable
+@status unstable
+-->
+
+
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!--
+/**
+ * @group Paper Elements
+ *
+ * paper-focusable is a base class for paper elements that can be focused.
+ *
+ * @element paper-focusable
+ * @status beta
+ * @homepage github.io
+ */
+-->
+
+
+
+<polymer-element name="paper-focusable" attributes="active focused disabled isToggle" tabindex="0" on-down="{{downAction}}" on-up="{{upAction}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-contextmenu="{{contextMenuAction}}" assetpath="../bower_components/paper-focusable/">
+
+  <template>
+    <style>:host([disabled]){pointer-events:none}</style>
+    <content></content>
+  </template>
+
+  <script>Polymer("paper-focusable",{publish:{active:{value:false,reflect:true},focused:{value:false,reflect:true},pressed:{value:false,reflect:true},disabled:{value:false,reflect:true},isToggle:{value:false,reflect:false}},disabledChanged:function(){if(this.disabled){this.removeAttribute("tabindex")}else{this.setAttribute("tabindex",0)}},downAction:function(){this.pressed=true;if(this.isToggle){this.active=!this.active}else{this.active=true}},contextMenuAction:function(e){this.upAction(e);this.focusAction()},upAction:function(){this.pressed=false;if(!this.isToggle){this.active=false}},focusAction:function(){if(!this.pressed){this.focused=true}},blurAction:function(){this.focused=false}});</script>
+</polymer-element>
+
+
+<polymer-element name="paper-button-base" extends="paper-focusable" assetpath="../bower_components/paper-button/">
+
+  <script>Polymer("paper-button-base",{z:1,activeChanged:function(){this.super();if(this.active){if(!this.lastEvent){var rect=this.getBoundingClientRect();this.lastEvent={x:rect.left+rect.width/2,y:rect.top+rect.height/2}}this.$.ripple.downAction(this.lastEvent)}else{this.$.ripple.upAction()}this.adjustZ()},disabledChanged:function(){this.super();if(this.disabled){this.setAttribute("aria-disabled","")}else{this.removeAttribute("aria-disabled")}this.adjustZ()},recenteringTouchChanged:function(){if(this.$.ripple){this.$.ripple.classList.toggle("recenteringTouch",this.recenteringTouch)}},fillChanged:function(){if(this.$.ripple){this.$.ripple.classList.toggle("fill",this.fill)}},adjustZ:function(){if(this.active){this.z=2}else if(this.disabled){this.z=0}else{this.z=1}},downAction:function(e){this.super(e);this.lastEvent=e;if(!this.$.ripple){var ripple=document.createElement("paper-ripple");ripple.setAttribute("id","ripple");ripple.setAttribute("fit","");if(this.recenteringTouch){ripple.classList.add("recenteringTouch")}if(!this.fill){ripple.classList.add("circle")}this.$.ripple=ripple;this.shadowRoot.insertBefore(ripple,this.shadowRoot.firstChild)}}});</script>
+</polymer-element>
+
+
+<polymer-element name="paper-button" extends="paper-button-base" attributes="raised recenteringTouch fill" role="button" assetpath="../bower_components/paper-button/">
 
   <template>
 
-    <style>:host{display:inline-block;position:relative;border:0;background:0 0;text-align:center;font:inherit;text-transform:uppercase;outline:0;border-radius:3px;-webkit-user-select:none;user-select:none;cursor:pointer}:host(.hover:hover){background:#e4e4e4}:host([raisedButton]){background:#dfdfdf}:host([raisedButton].hover:hover){background:#d6d6d6}:host([disabled]){background:#eaeaea!important;color:#a8a8a8!important;cursor:auto}#shadow-container{border-radius:inherit}#clip{position:relative;border-radius:inherit;overflow:hidden}#ripple{position:absolute;top:0;left:0;bottom:0;right:0;color:#d1d1d1;pointer-events:none}:host([raisedButton]) #ripple{color:#cecece}#ripple::shadow canvas{top:0;left:0}#content{position:relative}#icon{margin:8px}#content>span{display:inline-block;margin:.5em}</style>
+    <style>:host{display:inline-block;position:relative;box-sizing:border-box;min-width:5.14em;padding:.7em .57em;margin:0 .29em;background:0 0;text-align:center;font:inherit;text-transform:uppercase;outline:0;border-radius:3px;-webkit-user-select:none;user-select:none;cursor:pointer;z-index:0}:host([disabled]){background:#eaeaea!important;color:#a8a8a8!important;cursor:auto;pointer-events:none}::content *{text-transform:inherit}#ripple{pointer-events:none;z-index:-1}</style>
 
-    <template if="{{raisedButton}}">
-      <div fit="" id="shadow-container">
-        <paper-shadow id="shadow" z="{{z}}" animated=""></paper-shadow>
-      </div>
+    <template if="{{raisedButton || raised}}">
+      <paper-shadow id="shadow" z="{{z}}" animated=""></paper-shadow>
     </template>
 
-    <div id="clip">
-      <!-- <div id="focusBg"></div> -->
-      <paper-ripple id="ripple"></paper-ripple>
-      <div id="content">
-        <template if="{{iconSrc || icon}}">
-          <core-icon id="icon" src="{{iconSrc}}" icon="{{icon}}"></core-icon>
-        </template>
-        <template if="{{label}}">
-          <span>{{label}}</span>
-        </template>
-      </div>
+    <!-- this div is needed to position the ripple behind text content -->
+    <div relative="">
+      <content></content>
+      {{label}}
     </div>
 
   </template>
 
-  <script>Polymer("paper-button",{publish:{label:"",raisedButton:{value:false,reflect:true},iconSrc:"",icon:""},z:1,attached:function(){if(this.textContent&&this.textContent.match(/\S+/)){console.warn('Using textContent to label the button is deprecated. Use the "label" property instead');this.label=this.textContent}},activeChanged:function(){this.super();if(this.active){if(!this.lastEvent){var rect=this.getBoundingClientRect();this.lastEvent={x:rect.left+rect.width/2,y:rect.top+rect.height/2}}this.$.ripple.downAction(this.lastEvent)}else{this.$.ripple.upAction()}this.adjustZ()},focusedChanged:function(){this.super();this.adjustZ()},disabledChanged:function(){this.super();this.adjustZ()},insideButton:function(x,y){var rect=this.getBoundingClientRect();return rect.left<=x&&x<=rect.right&&rect.top<=y&&y<=rect.bottom},adjustZ:function(){if(this.focused){this.classList.add("paper-shadow-animate-z-1-z-2")}else{this.classList.remove("paper-shadow-animate-z-1-z-2");if(this.active){this.z=2}else if(this.disabled){this.z=0}else{this.z=1}}},downAction:function(e){this.super(e);this.lastEvent=e},labelChanged:function(){this.setAttribute("aria-label",this.label)}});</script>
+  <script>Polymer("paper-button",{publish:{label:"",raised:false,raisedButton:false,recenteringTouch:false,fill:true},labelChanged:function(){if(this.label){console.warn('The "label" property is deprecated.')}},raisedButtonChanged:function(){if(this.raisedButton){console.warn('The "raisedButton" property is deprecated.')}}});</script>
 </polymer-element>
 </div><div hidden><!--
 Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
@@ -946,7 +972,7 @@ object like this: `{v: 'top', h: 'right'}`.
 
   <template>
 
-    <style>:host{background:#fff;color:rgba(0,0,0,.87)}#shadow{position:absolute;top:0;left:0;bottom:0;right:0;z-index:-1}#container{overflow:hidden}#main{height:auto;-webkit-order:1;-ms-flex-order:1;order:1;padding:24px;overflow:auto}h1{margin:0}#actions{-webkit-order:2;-ms-flex-order:2;order:2;padding:4px 16px 20px}polymer-next-selector{content:':host > *'}::content>*{font:inherit}</style>
+    <style>:host{background:#fff;color:rgba(0,0,0,.87)}#shadow{position:absolute;top:0;left:0;bottom:0;right:0;z-index:-1}#container{overflow:hidden}#main{height:auto;-webkit-order:1;-ms-flex-order:1;order:1;padding:24px;overflow:auto}h1{margin:0}#actions{-webkit-order:2;-ms-flex-order:2;order:2;padding:4px 16px 20px}polyfill-next-selector{content:':host > *'}::content>*{font:inherit}</style>
 
     <div id="shadow">
       <paper-shadow z="3" hasposition=""></paper-shadow>
@@ -1125,87 +1151,210 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <!--
-`<paper-fab>` is a floating action button with an icon. It comes in two sizes: regular
-size and a smaller size by applying the class `mini`.
+@group Paper Elements
+
+Material Design: <a href="https://spec.googleplex.com/quantum/components/buttons.html">Button</a>
+
+`paper-fab` is a floating action button. It contains an image placed in the center and
+comes in two sizes: regular size and a smaller size by applying the class `mini`. When
+the user touches the button, a ripple effect emanates from the center of the button.
+
+You may import `core-icons` to use with this element, or provide an URL to a custom icon.
+See `core-iconset` for more information about how to use a custom icon set.
 
 Example:
 
-    <paper-fab icon="favorite"></paper-fab>
-    <paper-fab class="mini"></paper-fab>
+    <link href="path/to/core-icons/core-icons.html" rel="import">
+
+    <paper-fab icon="add"></paper-fab>
+    <paper-fab mini icon="favorite"></paper-fab>
+    <paper-fab src="star.png"></paper-fab>
+
+Styling
+-------
+
+Style the button with CSS as you would a normal DOM element. If you are using the icons
+provided by `core-icons`, the icon will inherit the foreground color of the button.
+
+    /* make a blue "cloud" button */
+    <paper-fab icon="cloud" style="color: blue;"></paper-fab>
+
+By default, the ripple is the same color as the foreground at 25% opacity. You may
+customize the color using this selector:
+
+    /* make #my-button use a blue ripple instead of foreground color */
+    #my-button::shadow #ripple {
+      color: blue;
+    }
+
+The opacity of the ripple is not customizable via CSS.
+
+Accessibility
+-------------
+
+The button is accessible by default if you use the `icon` property. By default, the
+`aria-label` attribute will be set to the `icon` property. If you use a custom icon,
+you should ensure that the `aria-label` attribute is set.
+
+    <paper-fab src="star.png" aria-label="star"></paper-fab>
+
+@element paper-fab
+@extends paper-button-base
+@status unstable
+-->
+
+
+
+
+
+
+<polymer-element name="paper-fab" extends="paper-button-base" attributes="src icon mini" role="button" assetpath="../bower_components/paper-fab/">
+
+  <template>
+
+    <style>:host{display:inline-block;position:relative;outline:0;-webkit-user-select:none;user-select:none;cursor:pointer;z-index:0;box-sizing:border-box;width:56px;height:56px;background:#d23f31;color:#fff;border-radius:50%;padding:16px}:host([mini]){width:40px;height:40px;padding:8px}:host([disabled]){color:#c9c9c9;pointer-events:none;cursor:auto}#ripple{pointer-events:none;z-index:-1}</style>
+
+    <template if="{{raised}}">
+      <paper-shadow id="shadow" z="{{z}}" animated=""></paper-shadow>
+    </template>
+
+    <!-- to position to ripple behind the icon -->
+    <core-icon relative="" id="icon" src="{{src}}" icon="{{icon}}"></core-icon>
+
+  </template>
+
+  <script>Polymer("paper-fab",{publish:{src:"",icon:"",mini:false,raised:true,recenteringTouch:false,fill:true},iconChanged:function(oldIcon){this.setAttribute("aria-label",this.icon)}});</script>
+</polymer-element>
+</div><div hidden><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!--
+`paper-toast` provides lightweight feedback about an operation in a small popup 
+at the base of the screen on mobile and at the lower left on desktop. Toasts are 
+above all other elements on screen, including the FAB.
+
+Toasts automatically disappear after a timeout or after user interaction 
+elsewhere on the screen, whichever comes first. Toasts can be swiped off 
+screen.  There can be only one on the screen at a time.
+
+Example:
+
+    <paper-toast text="Your draft has been discarded." onclick="discardDraft(el)"></paper-toast>
+    
+    <script>
+      function discardDraft(el) {
+        el.show();
+      }
+    </script>
+    
+An action button can be presented in the toast.
+
+Example (using Polymer's data-binding features):
+
+    <paper-toast id="toast2" text="Connection timed out. Showing limited messages.">
+      <div style="color: blue;" on-tap="{{retry}}">Retry</div>
+    </paper-toast>
+    
+Positioning toast:
+
+A standard toast appears near the lower left of the screen.  You can change the
+position by overriding bottom and left positions.
+
+    paper-toast {
+      bottom: 40px;
+      left: 10px;
+    }
+  
+To make it fit at the bottom of the screen:
+
+    paper-toast {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  
+When the screen size is smaller than the `responsiveWidth` (default to 480px),
+the toast will automatically fits at the bottom of the screen.
 
 @group Paper Elements
-@element paper-fab
+@element paper-toast
 @homepage github.io
-@extends paper-icon-button
 -->
+
 
 
 <!--
 Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
-The complete set of authors may be found at http://polymer.github.io/AUTHORS
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <!--
-@group Paper Elements
-`paper-icon-button` is a button with an image placed at the center.
+/**
+ * @group Polymer Core Elements
+ * @element core-media-query
+ * @status beta
+ * @homepage github.io
+ *
+ * core-media-query can be used to data bind to a CSS media query.
+ * The "query" property is a bare CSS media query.
+ * The "queryMatches" property will be a boolean representing if the page matches that media query.
+ *
+ * core-media-query uses media query listeners to dynamically update the "queryMatches" property.
+ * A "core-media-change" event also fires when queryMatches changes.
+ *
+ * Example:
+ *
+ *      <core-media-query query="max-width: 640px" queryMatches="{{phoneScreen}}"></core-media-query>
+ *
+ */
 
-Example:
-
-    <paper-icon-button iconSrc="star.png"></paper-icon-button>
-
-`paper-icon-button` includes a default icon set.  Use `icon` to specify 
-which icon from the icon set to use.
-
-Example:
-
-    <paper-icon-button icon="menu"></paper-icon-button>
-
-The icons provided by `core-icons` are SVG, and you can style them with CSS.
-
-Example:
-
-    <paper-icon-button icon="favorite" style="fill:red;"></paper-icon-button>
-
-See `core-iconset` for more information about how to use a custom icon set.
-
-@element paper-icon-button
-@extends paper-button
-@homepage github.io
+ /**
+  * Fired when the media query state changes
+  *
+  * @event core-media-change
+  */
 -->
 
 
-
-
-<polymer-element name="paper-icon-button" extends="paper-button" attributes="fill" assetpath="../bower_components/paper-icon-button/">
-
+<polymer-element name="core-media-query" attributes="query queryMatches" assetpath="../bower_components/core-media-query/">
   <template>
-
-    <style>:host([disabled]){background:none!important}:host([disabled]) /deep/ #icon{fill:#c9c9c9}:host(:not([fill])) /deep/ #focusBg{border-radius:50%}</style>
-
-    <shadow></shadow>
-
+    <style>:host{display:none}</style>
   </template>
-
-  <script>Polymer("paper-icon-button",{publish:{fill:{value:false,reflect:true}},ready:function(){this.$.ripple.classList.add("recenteringTouch");this.fillChanged()},fillChanged:function(){this.$.ripple.classList.toggle("circle",!this.fill)},iconChanged:function(oldIcon){if(!this.label){this.setAttribute("aria-label",this.icon)}}});</script>
-  
+  <script>Polymer("core-media-query",{queryMatches:false,query:"",ready:function(){this._mqHandler=this.queryHandler.bind(this);this._mq=null},queryChanged:function(){if(this._mq){this._mq.removeListener(this._mqHandler)}var query=this.query;if(query[0]!=="("){query="("+this.query+")"}this._mq=window.matchMedia(query);this._mq.addListener(this._mqHandler);this.queryHandler(this._mq)},queryHandler:function(mq){this.queryMatches=mq.matches;this.asyncFire("core-media-change",mq)}});</script>
 </polymer-element>
 
 
-<polymer-element name="paper-fab" extends="paper-icon-button" assetpath="../bower_components/paper-fab/">
+<polymer-element name="paper-toast" attributes="text duration opened responsiveWidth swipeDisabled" role="status" assetpath="../bower_components/paper-toast/">
 
-  <template>
+<template>
 
-    <style>:host{box-sizing:border-box;width:56px;height:56px;background:#d23f31;border-radius:50%;fill:#fff}:host(.mini){width:40px;height:40px}:host /deep/ #focusBg{display:none}:host /deep/ #icon{display:block;margin:16px}:host(.mini) /deep/ #icon{margin:8px}</style>
+  <style>:host{display:inline-block;background:#323232;color:#f1f1f1;min-height:48px;min-width:288px;padding:16px 24px 12px;box-sizing:border-box;-moz-box-sizing:border-box;box-shadow:0 2px 5px 0 rgba(0,0,0,.26);border-radius:2px;bottom:12px;left:12px;font-size:14px;cursor:default}:host(.capsule){border-radius:24px}:host(.fit-bottom){bottom:0;left:0;width:100%;min-width:0;border-radius:0}:host(.core-transition.dragging){transition:none}:host(.core-transition.fade-out-down),:host(.core-transition.fade-out-up),:host(.core-transition.fade-out-right),:host(.core-transition.fade-out-left){opacity:0;transition:-webkit-transform .08s ease-in-out,opacity .08s ease-in-out;transition:transform .08s ease-in-out,opacity .08s ease-in-out}:host(.core-transition.fade-out-down){-webkit-transform:translate(0,100%);transform:translate(0,100%)}:host(.core-transition.fade-out-up){-webkit-transform:translate(0,-100%);transform:translate(0,-100%)}:host(.core-transition.fade-out-right){-webkit-transform:translate(100%,0);transform:translate(100%,0)}:host(.core-transition.fade-out-left){-webkit-transform:translate(-100%,0);transform:translate(-100%,0)}.toast-container{overflow:hidden}.toast-action{padding-left:24px;cursor:pointer;text-transform:uppercase}</style>
 
-    <shadow></shadow>
+  <core-overlay autofocusdisabled="" opened="{{opened}}" target="{{}}" sizingtarget="{{$.container}}" transition="core-transition-bottom"></core-overlay>
 
-  </template>
+  <div class="toast-container" horizontal="" layout="">
 
-  <script>Polymer("paper-fab",{publish:{raisedButton:{value:true,reflect:true}}});</script>
+    <div class="toast-text" flex="">{{text}}</div>
+    
+    <div class="toast-text toast-action" on-tap="{{dismiss}}">
+      <content></content>
+    </div>
+
+  </div>
+  
+  <core-media-query query="max-width: {{responsiveWidth}}" querymatches="{{narrowMode}}"></core-media-query>
+
+</template>
+<script>(function(){var currentToast;Polymer("paper-toast",{text:"",duration:3e3,opened:false,responsiveWidth:"480px",swipeDisabled:false,eventDelegates:{trackstart:"trackStart",track:"track",trackend:"trackEnd",transitionend:"transitionEnd"},narrowModeChanged:function(){this.classList.toggle("fit-bottom",this.narrowMode)},openedChanged:function(){if(this.opened){this.dismissJob=this.job(this.dismissJob,this.dismiss,this.duration)}else{this.dismissJob&&this.dismissJob.stop();this.dismiss()}},toggle:function(){this.opened=!this.opened},show:function(){if(currentToast){currentToast.dismiss()}currentToast=this;this.opened=true},dismiss:function(){if(this.dragging){this.shouldDismiss=true}else{this.opened=false;if(currentToast===this){currentToast=null}}},trackStart:function(e){if(!this.swipeDisabled){e.preventTap();this.vertical=e.yDirection;this.w=this.offsetWidth;this.h=this.offsetHeight;this.dragging=true;this.classList.add("dragging")}},track:function(e){if(this.dragging){var s=this.style;if(this.vertical){var y=e.dy;s.opacity=(this.h-Math.abs(y))/this.h;s.webkitTransform=s.transform="translate3d(0, "+y+"px, 0)"}else{var x=e.dx;s.opacity=(this.w-Math.abs(x))/this.w;s.webkitTransform=s.transform="translate3d("+x+"px, 0, 0)"}}},trackEnd:function(e){if(this.dragging){this.classList.remove("dragging");this.style.opacity=null;this.style.webkitTransform=this.style.transform=null;var cl=this.classList;if(this.vertical){cl.toggle("fade-out-down",e.yDirection===1&&e.dy>0);cl.toggle("fade-out-up",e.yDirection===-1&&e.dy<0)}else{cl.toggle("fade-out-right",e.xDirection===1&&e.dx>0);cl.toggle("fade-out-left",e.xDirection===-1&&e.dx<0)}this.dragging=false}},transitionEnd:function(){var cl=this.classList;if(cl.contains("fade-out-right")||cl.contains("fade-out-left")||cl.contains("fade-out-down")||cl.contains("fade-out-up")){this.dismiss();cl.remove("fade-out-right","fade-out-left","fade-out-down","fade-out-up")}else if(this.shouldDismiss){this.dismiss()}this.shouldDismiss=false}})})();</script>
 </polymer-element>
 </div><div hidden>
 <!--
@@ -1231,6 +1380,32 @@ Theming
 
 Set `CoreStyle.g.paperInput.focusedColor` and `CoreStyle.g.paperInput.invalidColor` to theme
 the focused and invalid states.
+
+To add custom styling to only some elements, use these selectors:
+
+    html /deep/ paper-input[focused] .floated-label {
+        /* floating label color when the input has focus */
+        color: green;
+    }
+
+    html /deep/ paper-input .focused-underline,
+    html /deep/ paper-input .cursor {
+        /* line and cursor color when the input has focus */
+        background-color: green;
+    }
+
+    html /deep/ paper-input.invalid[focused] .floated-label,
+    html /deep/ paper-input[focused] .error-text,
+    html /deep/ paper-input[focused] .error-icon {
+        /* error text, icon, and floating label color when input is invalid */
+        color: salmon;
+    }
+
+    html /deep/ paper-input.invalid .focused-underline,
+    html /deep/ paper-input.invalid .cursor {
+        /* line and cursor color when the input is invalid */
+        background-color: salmon;
+    }
 
 @group Paper Elements
 @element paper-input
@@ -2235,7 +2410,7 @@ One can build a progress bar using `core-range` like this:
     <core-localstorage name="jfwi-settings" value="{{settings}}"></core-localstorage>
 
   </template>
-  <script>(function(){"use strict";Polymer("writing-settings",{defaults:{words:500,time:30},ready:function(){if(!this.settings){this.settings=this.defaults}console.log(this.settings);this.$.wordsGoal.addEventListener("core-change",function(e){this.save()}.bind(this));this.$.timeGoal.addEventListener("core-change",function(e){this.save()}.bind(this))},save:function(key,value){this.settings={words:this.$.wordsGoal.value,time:this.$.timeGoal.value>0?this.$.timeGoal.value:this.defaults.time}}})})();</script>
+  <script>(function(){"use strict";Polymer("writing-settings",{defaults:{words:500,time:30},ready:function(){if(!this.settings){this.settings=this.defaults}this.$.wordsGoal.addEventListener("core-change",function(e){this.save()}.bind(this));this.$.timeGoal.addEventListener("core-change",function(e){this.save()}.bind(this))},save:function(key,value){this.settings={words:this.$.wordsGoal.value,time:this.$.timeGoal.value>0?this.$.timeGoal.value:this.defaults.time}}})})();</script>
 </polymer-element>
 </div><div hidden>
 
@@ -2247,15 +2422,105 @@ One can build a progress bar using `core-range` like this:
     <h5 class="ui-display word-count">{{words}} Words</h5>
     <paper-progress id="progressBar" min="0" max="100" value="" secondaryprogress="0"></paper-progress>
   </template>
-  <script>(function(){"use strict";Polymer("typewriter-progress",{complete:false,maxValue:100,ready:function(){this.words=0},checkStatus:function(val){if(this.$.progressBar.value>=100&&this.complete===false){this.complete=true;this.fire("complete")}},setProgressValue:function(val){this.setWordProgress(val);this.$.progressBar.value=Math.floor(val/this.maxValue*100);console.log(this.$.progressBar.value);this.checkStatus();return this},setMaxValue:function(val){this.maxValue=val;return this},setTimeProgress:function(val){this.$.progressBar.secondaryProgress=val;return this},setWordProgress:function(val){this.words=val+"/"+this.maxValue;return this}})})();</script>
+  <script>(function(){"use strict";Polymer("typewriter-progress",{complete:false,maxValue:100,ready:function(){this.words=0},checkStatus:function(val){if(val>=this.maxValue){if(this.complete===false){this.complete=true;this.fire("complete")}}else{this.complete=false}return this},setProgressValue:function(val){this.setWordProgress(val);this.$.progressBar.value=Math.floor(val/this.maxValue*100);this.checkStatus(val);return this},setMaxValue:function(val){this.maxValue=val;return this},setTimeProgress:function(val){this.$.progressBar.secondaryProgress=val;return this},setWordProgress:function(val){this.words=val+"/"+this.maxValue;return this}})})();</script>
 </polymer-element>
 </div><div hidden>
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!--
+The `core-tooltip` element creates a hover tooltip centered for the content
+it contains. It can be positioned on the top|bottom|left|right of content using
+the `position` attribute.
+
+To include HTML in the tooltip, include the `tip` attribute on the relevant
+content.
+
+<b>Example</b>:
+
+    <core-tooltip label="I'm a tooltip">
+      <span>Hover over me.</span>
+    </core-tooltip>
+
+<b>Example</b> - positioning the tooltip to the right:
+
+    <core-tooltip label="I'm a tooltip to the right" position="right">
+      <core-icon-button icon="drawer"></core-icon-button>
+    </core-tooltip>
+
+<b>Example</b> - no arrow and showing by default:
+
+    <core-tooltip label="Tooltip with no arrow and always on" noarrow show>
+      <img src="image.jpg">
+    </core-tooltip>
+
+<b>Example</b> - disable the tooltip.
+
+    <core-tooltip label="Disabled label never shows" disabled>
+      ...
+    </core-tooltip>
+
+<b>Example</b> - rich tooltip using the `tip` attribute:
+
+    <core-tooltip>
+      <div>Example of a rich information tooltip</div>
+      <div tip>
+        <img src="profile.jpg">Foo <b>Bar</b> - <a href="#">@baz</a>
+      </div>
+    </core-tooltip>
+
+By default, the `tip` attribute specifies the HTML content for a rich tooltip.
+You can customize this attribute with the `tipAttribute` attribute:
+
+    <core-tooltip tipAttribute="htmltooltip">
+      <div>Example of a rich information tooltip</div>
+      <div htmltooltip>
+        ...
+      </div>
+    </core-tooltip>
+
+@group Polymer Core Elements
+@element core-tooltip
+@extends paper-focusable
+@homepage http://www.polymer-project.org/components/core-tooltip/index.html
+-->
+
+
+
+
+<!-- TODO: would be nice to inherit from label to get .htmlFor, and .control,
+           but the latter is readonly. -->
+<!-- TODO: support off center arrows. -->
+<!-- TODO: detect mobile and apply the .large class, instead of manual
+           control. -->
+<!-- TODO: possibly reuse core-overlay. -->
+<polymer-element name="core-tooltip" extends="paper-focusable" attributes="noarrow position label show tipAttribute" role="tooltip" assetpath="../bower_components/core-tooltip/">
+<template>
+
+  <style>:host{box-sizing:border-box;position:relative;display:inline-block;outline:0}:host(:hover:not([disabled])) .core-tooltip{visibility:visible!important}:host([focused]) .core-tooltip{visibility:visible!important}.core-tooltip:not(.show){visibility:hidden}.core-tooltip{position:absolute;font-size:10px;font-family:sans-serif;padding:8px;color:#fff;background-color:rgba(0,0,0,.8);box-sizing:border-box;border-radius:3px;white-space:nowrap;line-height:6px;z-index:1002;-webkit-user-select:none;user-select:none}:host([large]) .core-tooltip{line-height:14px;font-size:14px;padding:16px}.core-tooltip.noarrow::after{display:none}.core-tooltip::after{position:absolute;border:solid transparent;content:'';height:0;width:0;border-width:4px}.top{margin-bottom:10px;bottom:100%}.right{margin-left:10px;left:100%}.bottom{top:100%;margin-top:10px}.left{margin-right:10px;right:100%}.core-tooltip.bottom::after{bottom:100%;left:calc(50% - 4px);border-bottom-color:rgba(0,0,0,.8)}.core-tooltip.left::after{left:100%;top:calc(50% - 4px);border-left-color:rgba(0,0,0,.8)}.core-tooltip.top::after{top:100%;left:calc(50% - 4px);border-top-color:rgba(0,0,0,.8)}.core-tooltip.right::after{right:100%;top:calc(50% - 4px);border-right-color:rgba(0,0,0,.8)}</style>
+  <div id="tooltip" hidden?="{{!hasTooltipContent}}" class="core-tooltip {{position}} {{ {noarrow: noarrow, show: show &amp;&amp; !disabled} | tokenList}}">
+    <content id="c" select="[{{tipAttribute}}]">{{label}}</content>
+  </div>
+
+  <content></content>
+
+</template>
+<script>Polymer("core-tooltip",{label:null,computed:{hasTooltipContent:"label || !!tipElement"},publish:{show:{value:false,reflect:true},position:{value:"bottom",reflect:true},noarrow:{value:false,reflect:true}},tipAttribute:"tip",attached:function(){this.updatedChildren()},updatedChildren:function(){this.tipElement=null;for(var i=0,el;el=this.$.c.getDistributedNodes()[i];++i){if(el.hasAttribute&&el.hasAttribute("tip")){this.tipElement=el;break}}this.job("positionJob",this.setPosition);this.onMutation(this,this.updatedChildren)},labelChanged:function(oldVal,newVal){this.job("positionJob",this.setPosition)},positionChanged:function(oldVal,newVal){this.job("positionJob",this.setPosition)},setPosition:function(){var controlWidth=this.clientWidth;var controlHeight=this.clientHeight;var toolTipWidth=this.$.tooltip.clientWidth;var toolTipHeight=this.$.tooltip.clientHeight;switch(this.position){case"top":case"bottom":this.$.tooltip.style.left=(controlWidth-toolTipWidth)/2+"px";this.$.tooltip.style.top=null;break;case"left":case"right":this.$.tooltip.style.left=null;this.$.tooltip.style.top=(controlHeight-toolTipHeight)/2+"px";break}}});</script>
+</polymer-element>
+
 
 <polymer-element name="count-down" attributes="duration" assetpath="count-down/">
-  <template>
-    <style>:host{display:block;position:absolute;top:0;right:0}.ui-display{padding:20px;font-size:1.5rem;display:inline-block;color:#fff}</style>
-    <h5 class="ui-display clock-count">{{clock}}</h5>
-  </template>
-  <script>(function(){"use strict";var end,s=1e3,m=s*60,h=m*60,d=h*24,timer,countdownArray,divider=":",now,distance,renderedDate;Polymer("count-down",{complete:false,duration:1800,ready:function(){this.clock="00:00:00";return this},start:function(duration){if(duration){this.duration=duration}end=new Date;end.setSeconds(end.getSeconds()+this.duration);timer=setInterval(this.render.bind(this),1e3);return this},render:function(){now=new Date;distance=end.getTime()-now.getTime();if(distance<0){this.stop();this.fire("complete");return false}countdownArray=[];countdownArray.push(JFWI.pad(Math.floor(distance%d/h)));countdownArray.push(JFWI.pad(Math.floor(distance%h/m)));countdownArray.push(JFWI.pad(Math.floor(distance%m/s)));renderedDate=countdownArray.join(divider);this.clock=renderedDate;this.fire("tick",{value:renderedDate,percentage:JFWI.getCompletedTimePercentage(distance,this.duration)});return this},pause:function(){},stop:function(){clearInterval(timer);return this}})})();</script>
-</polymer-element>
-</div>
+    <template>
+        <style>:host{display:block;position:absolute;top:0;right:0;z-index:1}.ui-display{padding:20px;font-size:1.5rem;display:inline-block;color:#fff;cursor:pointer}.ui-display:hover{color:#bdced7}</style>
+        <core-tooltip label="Click to toggle pause/start" position="left">
+          <h5 class="ui-display clock-count" on-click="{{toggle}}">{{clock}}</h5>
+        </core-tooltip>
+    </template>
+    <script>(function(){"use strict";var end,s=1e3,m=s*60,h=m*60,d=h*24,timer,countdownArray,divider=":",now,distance,renderedDate;Polymer("count-down",{complete:false,duration:1800,countdown:null,ready:function(){this.clock="00:00:00";return this},set:function(duration){if(duration){this.duration=duration}this.countdown=this.duration+1;return this},start:function(){end=new Date;end.setSeconds(end.getSeconds()+this.countdown);timer=setInterval(this.render.bind(this),1e3);this.paused=false;return this},render:function(){now=new Date;distance=end.getTime()-now.getTime();if(distance<0){this.stop();this.fire("complete");return false}countdownArray=[];countdownArray.push(JFWI.pad(Math.floor(distance%d/h)));countdownArray.push(JFWI.pad(Math.floor(distance%h/m)));countdownArray.push(JFWI.pad(Math.floor(distance%m/s)));renderedDate=countdownArray.join(divider);this.clock=renderedDate;this.countdown--;this.fire("tick",{value:renderedDate,percentage:JFWI.getCompletedTimePercentage(distance,this.duration)});return this},pause:function(){clearInterval(timer);this.paused=true;return this},toggle:function(){if(this.paused===true){this.start()}else{this.pause()}},stop:function(){this.complete=true;clearInterval(timer);return this}})})();</script>
+</polymer-element></div>

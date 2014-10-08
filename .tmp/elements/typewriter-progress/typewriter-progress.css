@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; }
+
+paper-progress {
+  width: 100%; }
+
+paper-progress::shadow #activeProgress {
+  background-color: green; }
+  paper-progress::shadow #activeProgress.warning {
+    background-color: orange; }
+  paper-progress::shadow #activeProgress.danger {
+    background-color: red; }
+
+paper-progress::shadow #secondaryProgress {
+  background-color: cotton-blue; }
+
+.ui-display {
+  padding: 20px;
+  font-size: 1.5rem;
+  color: white;
+  text-align: left; }
